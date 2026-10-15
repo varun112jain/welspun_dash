@@ -1,0 +1,287 @@
+/* Welspun Corporate & Surveillance Command Design System */
+:root {
+    --welspun-primary: #005BAA;
+    --welspun-royal: #2C2B7C;
+    --welspun-astral: #3071A9;
+    --welspun-deep-navy: #0B2545;
+    --welspun-cyan: #00A6E6;
+    --welspun-light-blue: #F0F6FC;
+    --welspun-light-accent: #E3EFFB;
+    --welspun-border: #D0E1F5;
+    --welspun-dark-text: #0F172A;
+    --welspun-muted-text: #475569;
+    --welspun-success: #10B981;
+    --welspun-warning: #F59E0B;
+    --welspun-danger: #EF4444;
+    --card-shadow: 0 4px 16px rgba(0, 91, 170, 0.08);
+    --card-hover-shadow: 0 8px 24px rgba(0, 91, 170, 0.16);
+}
+
+/* Page Layout */
+.block-container {
+    padding-top: 1.2rem !important;
+    padding-bottom: 2.5rem !important;
+    max-width: 96% !important;
+}
+
+/* Welspun Command Header */
+.welspun-header-card {
+    background: linear-gradient(135deg, #07192F 0%, #005BAA 65%, #00A6E6 100%);
+    padding: 1.4rem 2rem;
+    border-radius: 12px;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 91, 170, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.welspun-header-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #ffffff !important;
+}
+
+.welspun-header-subtitle {
+    font-size: 0.92rem;
+    color: #BAE6FD;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
+.welspun-badge {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Flashing Emergency Beacon Indicator */
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pulse-dot-red {
+    width: 10px;
+    height: 10px;
+    background-color: #EF4444;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-red 1.5s infinite;
+}
+
+.pulse-dot-green {
+    width: 10px;
+    height: 10px;
+    background-color: #10B981;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-green 2s infinite;
+}
+
+/* Surveillance KPI Card */
+.surv-kpi-card {
+    background: #ffffff;
+    border: 1px solid var(--welspun-border);
+    border-radius: 10px;
+    padding: 1.1rem;
+    box-shadow: var(--card-shadow);
+    border-left: 4px solid var(--welspun-primary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.surv-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.surv-kpi-card.critical {
+    border-left-color: var(--welspun-danger);
+    background: #FEF2F2;
+}
+
+.surv-kpi-card.warning {
+    border-left-color: var(--welspun-warning);
+    background: #FFFBEB;
+}
+
+.surv-kpi-card.optimal {
+    border-left-color: var(--welspun-primary);
+}
+
+.surv-kpi-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--welspun-muted-text);
+    margin-bottom: 0.25rem;
+}
+
+.surv-kpi-val {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: var(--welspun-deep-navy);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+}
+
+.surv-kpi-sub {
+    font-size: 0.8rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* CCTV Video Feed Card Frame */
+.cctv-card {
+    background: #0F172A;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.cctv-card:hover {
+    border-color: var(--welspun-cyan);
+    transform: scale(1.01);
+}
+
+.cctv-card.alert-border {
+    border: 2px solid #EF4444;
+    animation: pulse-red 2s infinite;
+}
+
+.cctv-header-bar {
+    background: #020617;
+    color: #E2E8F0;
+    padding: 0.55rem 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: monospace;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #1E293B;
+}
+
+.cctv-live-tag {
+    color: #EF4444;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(239, 68, 68, 0.12);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+}
+
+.cctv-footer-bar {
+    background: #0F172A;
+    color: #94A3B8;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.82rem;
+    border-top: 1px solid #1E293B;
+}
+
+/* Fire Station & Hydrant Status Panel */
+.fire-panel {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #E2E8F0;
+    box-shadow: var(--card-shadow);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.fire-panel-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--welspun-deep-navy);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #F1F5F9;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.85rem;
+}
+
+.tender-chip {
+    background: #F8FAFC;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.tender-chip.dispatched {
+    background: #FEF2F2;
+    border-color: #FCA5A5;
+}
+
+/* Alarm List Items */
+.alarm-item {
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-left: 5px solid #EF4444;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.65rem;
+    transition: all 0.2s ease;
+}
+
+.alarm-item.warning {
+    border-left-color: #F59E0B;
+}
+
+.alarm-item.resolved {
+    border-left-color: #10B981;
+    background: #F8FAFC;
+}
+
+.alarm-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.alarm-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #0F172A;
+    margin-bottom: 0.25rem;
+}
+
+.alarm-meta {
+    font-size: 0.78rem;
+    color: #64748B;
+}
+
+.alarm-desc {
+    font-size: 0.84rem;
+    color: #334155;
+    margin-top: 0.35rem;
+    margin-bottom: 0.4rem;
+}

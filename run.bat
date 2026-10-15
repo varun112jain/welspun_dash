@@ -1,0 +1,3 @@
+@echo off
+echo Starting Welspun Streamlit Dashboard in myenv...
+C:\Users\0231304\myenv\Scripts\streamlit.exe run app.py --server.port 8501
