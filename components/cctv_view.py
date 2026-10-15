@@ -44,7 +44,7 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
                 rendered = False
                 
         # Primary live stream: Animated loop (guaranteed 100% visible, zero black screens)
-        if not rendered and gif_path and os.path.exists(gif_path):
+        if not rendered and stream_format != "Snapshot" and gif_path and os.path.exists(gif_path):
             st.image(gif_path, use_container_width=True)
             rendered = True
             

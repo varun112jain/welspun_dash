@@ -11,3 +11,4 @@ myenv/
 .idea/
 *.log
 temp_*
+.agents/

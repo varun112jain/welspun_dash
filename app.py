@@ -96,7 +96,8 @@ with st.sidebar:
             "🧵 WLL Home & Advanced Spunlace Textiles (CAM-07)",
             "⚡ 123 MW Captive Thermal Plant & Solar Array (CAM-02)",
             "🚷 220kV Grid Substation Perimeter Fence (CAM-04)",
-            "🏡 Welspun City Township & Vidya Mandir (CAM-05, 08)",
+            "🏡 Welspun City Township: Aura Gardens (CAM-05)",
+            "🏫 Welspun Vidya Mandir & Health Centre (CAM-08)",
             "🚒 Dual Fire Command Hub: Station Alpha & Bravo (CAM-03)"
         ]
     )
@@ -220,20 +221,22 @@ tab_video, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
 with tab_video:
     # Filter feeds by sector if user selected a subset
     display_feeds = cctv_feeds
-    if "WCL" in feed_filter or "LSAW" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "WCL" in f["zone"] or "WCL" in f["name"]]
-    elif "WDI" in feed_filter or "Blast Furnace" in feed_filter or "Ductile" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "WDI" in f["zone"] or "WDI" in f["name"]]
-    elif "WLL" in feed_filter or "Spunlace" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "WLL" in f["zone"] or "WLL" in f["name"]]
-    elif "Captive" in feed_filter or "Thermal" in feed_filter or "Solar" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "Thermal" in f["zone"] or "Solar" in f["name"] or "CPP" in f["sector"]]
-    elif "Perimeter" in feed_filter or "Substation" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "Perimeter" in f["zone"] or "Substation" in f["name"]]
-    elif "Township" in feed_filter or "Vidya Mandir" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "Welspun City" in f["zone"]]
-    elif "Fire Command" in feed_filter or "Emergency" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "Emergency" in f["zone"]]
+    if "CAM-06" in feed_filter or "WCL" in feed_filter or "LSAW" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-06"]
+    elif "CAM-01" in feed_filter or "WDI" in feed_filter or "Blast Furnace" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-01"]
+    elif "CAM-07" in feed_filter or "WLL" in feed_filter or "Spunlace" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-07"]
+    elif "CAM-02" in feed_filter or "Captive" in feed_filter or "Thermal" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-02"]
+    elif "CAM-04" in feed_filter or "Perimeter" in feed_filter or "Substation" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-04"]
+    elif "CAM-05" in feed_filter or "Aura Gardens" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-05"]
+    elif "CAM-08" in feed_filter or "Vidya Mandir" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-08"]
+    elif "CAM-03" in feed_filter or "Fire Command" in feed_filter or "Emergency" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-03"]
 
     # Prominent Camera Online Telemetry Banner
     st.markdown(
