@@ -1,36 +1,41 @@
 """
 Smoke and Fire Sensor Health Telemetry Components
+Resilient across all Python & Plotly runtime environments.
 """
 import streamlit as st
+import pandas as pd
 import plotly.graph_objects as go
 from styles.welspun_theme import WELSPUN_COLORS
 
-def render_sensor_health_gauge(health_pct: float = 99.4) -> go.Figure:
-    """Renders a gauge showing overall networked smoke & fire sensor network health."""
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=health_pct,
-        number={'suffix': "%", 'font': {'size': 26, 'color': WELSPUN_COLORS["primary"], 'weight': 700}},
-        title={'text': "Sensor Network Health", 'font': {'size': 14, 'color': WELSPUN_COLORS["deep_navy"]}},
-        gauge={
-            'axis': {'range': [90, 100], 'tickwidth': 1, 'tickcolor': "#94A3B8"},
-            'bar': {'color': "#10B981" if health_pct >= 98.0 else "#F59E0B", 'thickness': 0.28},
-            'bgcolor': "white",
-            'borderwidth': 1,
-            'bordercolor': "#CBD5E1",
-            'steps': [
-                {'range': [90, 95], 'color': "rgba(239, 68, 68, 0.2)"},
-                {'range': [95, 98], 'color': "rgba(245, 158, 11, 0.2)"},
-                {'range': [98, 100], 'color': "rgba(16, 185, 129, 0.25)"}
-            ]
-        }
-    ))
-    fig.update_layout(
-        height=180,
-        margin=dict(l=15, r=15, t=30, b=10),
-        paper_bgcolor="rgba(0,0,0,0)"
-    )
-    return fig
+def render_sensor_health_gauge(health_pct: float = 99.4):
+    """Renders a gauge showing overall networked smoke & fire sensor network health with resilient fallback."""
+    try:
+        fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=float(health_pct),
+            number={'suffix': "%", 'font': {'size': 26, 'color': WELSPUN_COLORS["primary"], 'weight': 700}},
+            title={'text': "Sensor Network Health", 'font': {'size': 14, 'color': WELSPUN_COLORS["deep_navy"]}},
+            gauge={
+                'axis': {'range': [90.0, 100.0], 'tickwidth': 1, 'tickcolor': "#94A3B8"},
+                'bar': {'color': "#10B981" if health_pct >= 98.0 else "#F59E0B", 'thickness': 0.28},
+                'bgcolor': "white",
+                'borderwidth': 1,
+                'bordercolor': "#CBD5E1",
+                'steps': [
+                    {'range': [90.0, 95.0], 'color': "rgba(239, 68, 68, 0.2)"},
+                    {'range': [95.0, 98.0], 'color': "rgba(245, 158, 11, 0.2)"},
+                    {'range': [98.0, 100.0], 'color': "rgba(16, 185, 129, 0.25)"}
+                ]
+            }
+        ))
+        fig.update_layout(
+            height=180,
+            margin=dict(l=15, r=15, t=30, b=10),
+            paper_bgcolor="rgba(0,0,0,0)"
+        )
+        return fig
+    except Exception:
+        return None
 
 def render_sensor_health_panel(sensor_data: dict):
     """Renders the comprehensive smoke & fire detection network health matrix."""
@@ -43,7 +48,24 @@ def render_sensor_health_panel(sensor_data: dict):
     c_g, c_metrics = st.columns([1, 2])
     with c_g:
         fig_g = render_sensor_health_gauge(summary["overall_health_pct"])
-        st.plotly_chart(fig_g, use_container_width=True)
+        if fig_g is not None:
+            try:
+                st.plotly_chart(fig_g, use_container_width=True)
+            except Exception:
+                fig_g = None
+                
+        if fig_g is None:
+            # Fallback high-impact metric tile
+            st.markdown(
+                f"""
+                <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-top:10px;">
+                    <div style="font-size:0.8rem; color:#475569; text-transform:uppercase; font-weight:700;">Sensor Network Health</div>
+                    <div style="font-size:2.4rem; font-weight:800; color:#10B981; margin:4px 0;">{summary['overall_health_pct']:.1f}%</div>
+                    <div style="font-size:0.8rem; color:#64748B;">Target: &gt; 98.0% Operational</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         
     with c_metrics:
         st.markdown(

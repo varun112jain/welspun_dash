@@ -5,40 +5,43 @@ import streamlit as st
 import plotly.graph_objects as go
 from styles.welspun_theme import WELSPUN_COLORS
 
-def render_hydrant_gauge(pressure_bar: float = 8.6, target_bar: float = 8.0) -> go.Figure:
-    """Renders a high-precision Plotly gauge for the Anjar Fire Hydrant Ring pressure."""
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number+delta",
-        value=pressure_bar,
-        domain={'x': [0, 1], 'y': [0, 1]},
-        delta={'reference': target_bar, 'increasing': {'color': "#10B981"}, 'suffix': " Bar"},
-        title={'text': "Anjar Ring Hydrant Pressure", 'font': {'size': 15, 'color': WELSPUN_COLORS["deep_navy"], 'family': 'sans-serif'}},
-        number={'suffix': " Bar", 'font': {'size': 24, 'color': WELSPUN_COLORS["primary"], 'weight': 700}},
-        gauge={
-            'axis': {'range': [0, 14], 'tickwidth': 1, 'tickcolor': "#94A3B8"},
-            'bar': {'color': WELSPUN_COLORS["primary"], 'thickness': 0.28},
-            'bgcolor': "white",
-            'borderwidth': 1,
-            'bordercolor': "#CBD5E1",
-            'steps': [
-                {'range': [0, 6.0], 'color': "rgba(239, 68, 68, 0.25)"},
-                {'range': [6.0, 7.5], 'color': "rgba(245, 158, 11, 0.25)"},
-                {'range': [7.5, 10.5], 'color': "rgba(16, 185, 129, 0.3)"},
-                {'range': [10.5, 14.0], 'color': "rgba(239, 68, 68, 0.25)"}
-            ],
-            'threshold': {
-                'line': {'color': "#EF4444", 'width': 3},
-                'thickness': 0.75,
-                'value': target_bar
+def render_hydrant_gauge(pressure_bar: float = 8.6, target_bar: float = 8.0):
+    """Renders a high-precision Plotly gauge for the Anjar Fire Hydrant Ring pressure with resilient fallback."""
+    try:
+        fig = go.Figure(go.Indicator(
+            mode="gauge+number+delta",
+            value=float(pressure_bar),
+            domain={'x': [0, 1], 'y': [0, 1]},
+            delta={'reference': float(target_bar), 'increasing': {'color': "#10B981"}, 'suffix': " Bar"},
+            title={'text': "Anjar Ring Hydrant Pressure", 'font': {'size': 15, 'color': WELSPUN_COLORS["deep_navy"], 'family': 'sans-serif'}},
+            number={'suffix': " Bar", 'font': {'size': 24, 'color': WELSPUN_COLORS["primary"], 'weight': 700}},
+            gauge={
+                'axis': {'range': [0.0, 14.0], 'tickwidth': 1, 'tickcolor': "#94A3B8"},
+                'bar': {'color': WELSPUN_COLORS["primary"], 'thickness': 0.28},
+                'bgcolor': "white",
+                'borderwidth': 1,
+                'bordercolor': "#CBD5E1",
+                'steps': [
+                    {'range': [0.0, 6.0], 'color': "rgba(239, 68, 68, 0.25)"},
+                    {'range': [6.0, 7.5], 'color': "rgba(245, 158, 11, 0.25)"},
+                    {'range': [7.5, 10.5], 'color': "rgba(16, 185, 129, 0.3)"},
+                    {'range': [10.5, 14.0], 'color': "rgba(239, 68, 68, 0.25)"}
+                ],
+                'threshold': {
+                    'line': {'color': "#EF4444", 'width': 3},
+                    'thickness': 0.75,
+                    'value': float(target_bar)
+                }
             }
-        }
-    ))
-    fig.update_layout(
-        height=220,
-        margin=dict(l=15, r=15, t=35, b=10),
-        paper_bgcolor="rgba(0,0,0,0)"
-    )
-    return fig
+        ))
+        fig.update_layout(
+            height=220,
+            margin=dict(l=15, r=15, t=35, b=10),
+            paper_bgcolor="rgba(0,0,0,0)"
+        )
+        return fig
+    except Exception:
+        return None
 
 def render_fire_network_panel(fire_data: dict):
     """Renders the comprehensive networked fire command hub."""
