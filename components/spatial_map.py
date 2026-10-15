@@ -48,10 +48,10 @@ def render_anjar_spatial_map() -> go.Figure:
         hovertext=p_text
     ))
     
-    # 3. Welspun City Township (Living Quarters)
+    # 3. Welspun City Township (Township Quarters)
     city_nodes = [
-        {"name": "Welspun City: Residential Quarters (Aura Gardens)", "x": 6.5, "y": 7.0, "type": "Living Quarters", "status": "Normal", "cameras": 140},
-        {"name": "Welspun City: Senior Living & Staff Hostels", "x": 8.0, "y": 6.2, "type": "Living Quarters", "status": "Normal", "cameras": 95},
+        {"name": "Welspun City: Residential Quarters (Aura Gardens)", "x": 6.5, "y": 7.0, "type": "Township Quarters", "status": "Normal", "cameras": 140},
+        {"name": "Welspun City: Senior & Staff Hostels", "x": 8.0, "y": 6.2, "type": "Township Quarters", "status": "Normal", "cameras": 95},
         {"name": "Welspun City: Multi-Speciality Health Centre", "x": 5.2, "y": 7.5, "type": "Community / Hospital", "status": "Optimal", "cameras": 45},
         {"name": "Welspun Vidya Mandir School Campus", "x": 7.2, "y": 8.2, "type": "Community / School", "status": "Optimal", "cameras": 60}
     ]
@@ -66,8 +66,8 @@ def render_anjar_spatial_map() -> go.Figure:
     fig.add_trace(go.Scatter(
         x=cx_coords, y=cy_coords,
         mode="markers+text",
-        name="Welspun City (Living Quarters)",
-        text=["Living Quarters", "Staff Hostels", "Health Centre", "School"],
+        name="Welspun City (Township Quarters)",
+        text=["Residential Quarters", "Staff Hostels", "Health Centre", "School"],
         textposition="top center",
         marker=dict(size=16, color="#00A6E6", symbol="circle", line=dict(color="#FFFFFF", width=2)),
         hoverinfo="text",

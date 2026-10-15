@@ -11,16 +11,16 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
     pulse_dot = '<span class="pulse-dot-red"></span>' if "CRITICAL" in feed["status"] else '<span class="pulse-dot-green"></span>'
     
     with st.container(border=True):
-        # 1. Camera Header HUD
+        # 1. Camera Header HUD with standardized height & single-line ellipsis
         st.markdown(
             f"""
-            <div style="background:#020617; color:#E2E8F0; padding:6px 10px; border-radius:6px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; font-family:monospace; font-size:0.85rem; border:1px solid #1E293B;">
-                <div>
+            <div style="background:#020617; color:#E2E8F0; padding:6px 10px; border-radius:6px; min-height:42px; display:flex; justify-content:space-between; align-items:center; font-family:monospace; font-size:0.83rem; border:1px solid #1E293B; margin-bottom:8px; box-sizing:border-box;">
+                <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:68%;">
                     <span style="color:#00A6E6; font-weight:bold;">{feed["id"]}</span> | 
-                    <span>{feed["name"]}</span>
+                    <span title="{feed['name']}">{feed["name"]}</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="cctv-live-tag">{pulse_dot} LIVE STREAM</span>
+                <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+                    <span class="cctv-live-tag">{pulse_dot} LIVE</span>
                     <span style="color:#94A3B8; font-size:0.75rem;">{feed["fps"]} FPS</span>
                 </div>
             </div>
@@ -56,18 +56,20 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
         if not rendered:
             st.error(f"Feed stream offline for {feed['id']}")
             
-        # 3. Camera Metadata & AI Detections Footer
-        ai_tags_html = " ".join([f"<span style='background:#1E293B; color:#38BDF8; padding:2px 7px; border-radius:4px; font-size:0.72rem; border:1px solid #334155;'>{feat}</span>" for feat in feed.get("ai_features", [])])
+        # 3. Camera Metadata & AI Detections Footer (standardized min-height for uniform tile alignment)
+        ai_tags_html = " ".join([f"<span style='background:#1E293B; color:#38BDF8; padding:2px 7px; border-radius:4px; font-size:0.72rem; border:1px solid #334155; white-space:nowrap;'>{feat}</span>" for feat in feed.get("ai_features", [])[:2]])
         
         st.markdown(
             f"""
-            <div style="background:#0F172A; border-radius:6px; padding:8px 10px; margin-top:8px; border:1px solid #1E293B;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                    <span style="color:#E2E8F0; font-weight:600; font-size:0.78rem;">📍 <span style="color:#93C5FD;">{feed['sector']}</span></span>
-                    <span style="background:{badge_color}; color:#fff; font-size:0.72rem; font-weight:bold; padding:2px 8px; border-radius:4px;">{feed['alert_badge']}</span>
+            <div style="background:#0F172A; border-radius:6px; padding:10px 12px; margin-top:8px; border:1px solid #1E293B; min-height:120px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#E2E8F0; font-weight:600; font-size:0.78rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">📍 <span style="color:#93C5FD;">{feed['sector']}</span></span>
+                        <span style="background:{badge_color}; color:#fff; font-size:0.72rem; font-weight:bold; padding:2px 8px; border-radius:4px; flex-shrink:0;">{feed['alert_badge']}</span>
+                    </div>
+                    <div style="margin-bottom:6px; display:flex; gap:6px; flex-wrap:wrap;">{ai_tags_html}</div>
                 </div>
-                <div style="margin-bottom:6px;">{ai_tags_html}</div>
-                <div style="font-size:0.76rem; color:#CBD5E1; background:rgba(0,0,0,0.4); padding:5px 8px; border-radius:4px; border-left:3px solid {badge_color};">
+                <div style="font-size:0.75rem; color:#CBD5E1; background:rgba(0,0,0,0.45); padding:6px 8px; border-radius:4px; border-left:3px solid {badge_color}; line-height:1.3; min-height:36px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
                     <b>AI Intel:</b> {feed['ai_summary']}
                 </div>
             </div>

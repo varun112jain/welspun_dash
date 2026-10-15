@@ -64,7 +64,7 @@ with st.sidebar:
         <div style="background:#0F172A; color:#E2E8F0; padding:10px 14px; border-radius:8px; margin-top:8px; border-left:4px solid #00A6E6;">
             <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:#94A3B8;">Enterprise Facility</div>
             <div style="font-size:1.05rem; font-weight:700;">WELSPUN ANJAR</div>
-            <div style="font-size:0.8rem; color:#38BDF8;">Mega Industrial Plants & Welspun City</div>
+            <div style="font-size:0.8rem; color:#38BDF8;">Mega Industrial Plants & Welspun City Township</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -86,7 +86,7 @@ with st.sidebar:
             "🖥️ All 8 Active Screens (Master Wall)",
             "🏭 Industrial Manufacturing Plants (CAM-01, 02, 06)",
             "🚷 Perimeter & High-Voltage Gates (CAM-04, 07)",
-            "🏡 Welspun City Quarters & Campus (CAM-05, 08)",
+            "🏡 Welspun City Township & Campus (CAM-05, 08)",
             "🚒 Fire Station Emergency Bay (CAM-03)"
         ]
     )
@@ -158,82 +158,44 @@ if st.session_state["perimeter_alert_active"]:
         unsafe_allow_html=True
     )
 
-# Top KPI Metric Row (Includes CCTV Uptime Count)
-k_cam, k1, k2, k3, k4, k5 = st.columns(6)
-
-with k_cam:
-    st.markdown(
-        f"""
+# Top KPI Metric Row (Equal-Height Responsive Grid)
+st.markdown(
+    f"""
+    <div class="kpi-grid">
         <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-            <div class="surv-kpi-label">CCTV Feeds Online</div>
+            <div class="surv-kpi-label">Active CCTV Feeds</div>
             <div class="surv-kpi-val" style="color:#005BAA;">1,424 / 1,438</div>
             <div class="surv-kpi-sub"><b>99.0% Active</b> • 14 Maint.</div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-with k1:
-    st.markdown(
-        f"""
         <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-            <div class="surv-kpi-label">Safety Milestone</div>
+            <div class="surv-kpi-label">Incident Milestone</div>
             <div class="surv-kpi-val" style="color:#059669;">{safety_stats["days_since_last_incident"]} DAYS</div>
-            <div class="surv-kpi-sub"><b>{safety_stats["safe_man_hours"]}</b> Zero Incident</div>
+            <div class="surv-kpi-sub"><b>{safety_stats["safe_man_hours"]}</b> Zero LTI</div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-with k2:
-    st.markdown(
-        f"""
         <div class="surv-kpi-card critical">
-            <div class="surv-kpi-label">{kpi_data["perimeter_crossings"]["label"]}</div>
+            <div class="surv-kpi-label">Perimeter Defense</div>
             <div class="surv-kpi-val" style="color:#EF4444;">{kpi_data["perimeter_crossings"]["value"]}</div>
             <div class="surv-kpi-sub" style="color:#B91C1C;">⚠️ {kpi_data["perimeter_crossings"]["sub"]}</div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-with k3:
-    st.markdown(
-        f"""
-        <div class="surv-kpi-card critical">
-            <div class="surv-kpi-label">{kpi_data["active_fire_alarms"]["label"]}</div>
-            <div class="surv-kpi-val" style="color:#EA580C;">{kpi_data["active_fire_alarms"]["value"]}</div>
-            <div class="surv-kpi-sub" style="color:#C2410C;">⚠️ {kpi_data["active_fire_alarms"]["sub"]}</div>
+        <div class="surv-kpi-card warning">
+            <div class="surv-kpi-label">Thermal &amp; Fire Alarms</div>
+            <div class="surv-kpi-val" style="color:#D97706;">{kpi_data["active_fire_alarms"]["value"]}</div>
+            <div class="surv-kpi-sub" style="color:#B45309;">⚠️ {kpi_data["active_fire_alarms"]["sub"]}</div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-with k4:
-    st.markdown(
-        f"""
-        <div class="surv-kpi-card optimal">
-            <div class="surv-kpi-label">{kpi_data["sensor_health"]["label"]}</div>
+        <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
+            <div class="surv-kpi-label">Sensor Health</div>
             <div class="surv-kpi-val" style="color:#005BAA;">{kpi_data["sensor_health"]["value"]}</div>
             <div class="surv-kpi-sub">{kpi_data["sensor_health"]["sub"]}</div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-with k5:
-    st.markdown(
-        f"""
-        <div class="surv-kpi-card optimal">
-            <div class="surv-kpi-label">{kpi_data["fire_station_readiness"]["label"]}</div>
-            <div class="surv-kpi-val">{kpi_data["fire_station_readiness"]["value"]}</div>
+        <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
+            <div class="surv-kpi-label">Fire Command</div>
+            <div class="surv-kpi-val" style="color:#059669;">{kpi_data["fire_station_readiness"]["value"]}</div>
             <div class="surv-kpi-sub">{kpi_data["fire_station_readiness"]["sub"]}</div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-st.markdown("<br>", unsafe_allow_html=True)
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # ----------------- TABS WORKSPACE -----------------
 tab_video, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
@@ -252,7 +214,7 @@ with tab_video:
         display_feeds = [f for f in cctv_feeds if "Plant Core" in f["zone"]]
     elif "Perimeter" in feed_filter:
         display_feeds = [f for f in cctv_feeds if "Perimeter" in f["zone"] or "Gate" in f["name"]]
-    elif "Quarters" in feed_filter:
+    elif "Township" in feed_filter or "City" in feed_filter:
         display_feeds = [f for f in cctv_feeds if "Welspun City" in f["zone"]]
     elif "Fire Station" in feed_filter:
         display_feeds = [f for f in cctv_feeds if "Emergency" in f["zone"]]
@@ -265,10 +227,10 @@ with tab_video:
                 <span style="color:#BAE6FD; font-size:0.75rem; text-transform:uppercase; font-weight:700; letter-spacing:0.05em;">Surveillance Camera Network Telemetry</span><br>
                 <b style="font-size:1.35rem; color:#FFFFFF;">1,424 <span style="color:#94A3B8; font-size:0.92rem;">UP OUT OF</span> 1,438 <span style="color:#10B981; font-size:1.05rem;">(99.0% OPERATIONAL)</span></b>
             </div>
-            <div style="display:flex; gap:16px; font-size:0.8rem; color:#E2E8F0;">
+            <div style="display:flex; gap:16px; font-size:0.8rem; color:#E2E8F0; flex-wrap:wrap;">
                 <div>🏭 Plant Core: <b style="color:#38BDF8;">812/820</b></div>
                 <div>🚷 Perimeter: <b style="color:#FBBF24;">216/218</b></div>
-                <div>🏡 City Quarters: <b style="color:#34D399;">348/350</b></div>
+                <div>🏡 Township: <b style="color:#34D399;">348/350</b></div>
                 <div>🚒 Fire Hub: <b style="color:#F87171;">48/50</b></div>
                 <div>🔧 Maintenance: <b style="color:#94A3B8;">14</b></div>
             </div>
@@ -277,12 +239,13 @@ with tab_video:
         unsafe_allow_html=True
     )
     
-    # Render Multi-Screen Grid (All feeds visible at once)
-    cols = st.columns(num_cols)
-    for idx, feed in enumerate(display_feeds):
-        target_col = cols[idx % num_cols]
-        with target_col:
-            render_cctv_video_card(feed, stream_format=stream_fmt)
+    # Render Multi-Screen Grid with strict row-by-row baseline alignment
+    for row_start in range(0, len(display_feeds), num_cols):
+        row_feeds = display_feeds[row_start : row_start + num_cols]
+        cols = st.columns(num_cols)
+        for c_idx, feed in enumerate(row_feeds):
+            with cols[c_idx]:
+                render_cctv_video_card(feed, stream_format=stream_fmt)
 
 # ----------------- TAB 2: SENSOR HEALTH -----------------
 with tab_sensors:

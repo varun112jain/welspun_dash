@@ -39,7 +39,7 @@ def get_division_breakdown():
     """Generates synthetic breakdown across key Welspun businesses."""
     divisions = [
         {"Division": "Welspun Corp (Pipes & Steel)", "Revenue_Cr": 1240, "Volume_MT": 94500, "Plants": 6, "Efficiency": 93.4},
-        {"Division": "Welspun Living (Home Textiles)", "Revenue_Cr": 980, "Volume_MT": 68000, "Plants": 4, "Efficiency": 91.8},
+        {"Division": "Welspun Advanced Textiles & Home", "Revenue_Cr": 980, "Volume_MT": 68000, "Plants": 4, "Efficiency": 91.8},
         {"Division": "Welspun Enterprises (Infra)", "Revenue_Cr": 720, "Volume_MT": 45000, "Plants": 3, "Efficiency": 89.6},
         {"Division": "Welspun Flooring", "Revenue_Cr": 390, "Volume_MT": 24000, "Plants": 2, "Efficiency": 94.1},
         {"Division": "Welspun New Energy", "Revenue_Cr": 280, "Volume_MT": 16500, "Plants": 2, "Efficiency": 96.0}

@@ -277,7 +277,7 @@ def create_township_quarters_video(output_path, num_frames=75, fps=15):
                     cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 255, 100), 1)
         
         # HUD Overlays
-        cv2.putText(frame, "CAM-05 WELSPUN CITY LIVING QUARTERS | AURA GARDENS", (20, 30), 
+        cv2.putText(frame, "CAM-05 WELSPUN CITY TOWNSHIP | AURA GARDENS", (20, 30), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 1)
         cv2.putText(frame, "MOTION DETECT: ACTIVE | ALL COMPLIANT", (w - 360, 30), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.48, (0, 255, 120), 1)

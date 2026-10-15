@@ -15,10 +15,10 @@ A real-time AI-powered CCTV surveillance, fire station network, and plant safety
 - **🎥 8-Screen Live Surveillance Video Wall:** Multi-screen continuous streaming with native H.264/animated playback.
 - **🚷 Real Human Perimeter Crossing Detection (`CAM-04`):** Photographic adult human intruder tracking with virtual laser tripwire breach alert and coordinate tracking.
 - **🔥 FLIR Radiometric Thermal Heatmap (`CAM-02`):** Continuous IR temperature monitoring on critical chemical valves with hot spot alarms (>90°C).
-- **🚒 Networked Dual Fire Station Hub:** Telemetry for Station Alpha (Industrial Plant) and Station Bravo (Welspun City Living Quarters), fleet readiness, and high-pressure hydrant loop monitoring (8.6 Bar).
+- **🚒 Networked Dual Fire Station Hub:** Telemetry for Station Alpha (Industrial Plant) and Station Bravo (Welspun City Township Quarters), fleet readiness, and high-pressure hydrant loop monitoring (8.6 Bar).
 - **📡 3,420 Smoke & Fire Sensor Health Matrix:** Category breakdown of optical smoke, flame radiometers, and linear heat loops with drift warnings and loop bus voltage.
 - **🛡️ 148 Days Incident-Free Milestone:** Real-time safety milestone clock and man-hours tracker.
-- **🗺️ Interactive Anjar 2D Spatial Defense Topology:** Spatial map linking plant sectors, living quarters, and dual fire stations via the high-pressure water loop.
+- **🗺️ Interactive Anjar 2D Spatial Defense Topology:** Spatial map linking plant sectors, township quarters, and dual fire stations via the high-pressure water loop.
 
 ---
 

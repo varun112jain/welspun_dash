@@ -88,7 +88,7 @@ def get_surveillance_kpis():
     }
 
 def get_cctv_feeds():
-    """Returns 8 active CCTV screens across Welspun Anjar Plant, Perimeter, and Living Quarters."""
+    """Returns 8 active CCTV screens across Welspun Anjar Plant, Perimeter, and Township Quarters."""
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
     
     return [
@@ -166,8 +166,8 @@ def get_cctv_feeds():
         },
         {
             "id": "CAM-05",
-            "name": "Welspun City Living Quarters - Aura Gardens",
-            "zone": "Welspun City (Living Quarters)",
+            "name": "Welspun City Township - Aura Gardens",
+            "zone": "Welspun City (Township Quarters)",
             "sector": "Residential Block C & Main Boulevard",
             "video": os.path.join(base_dir, "video_township_quarters.mp4"),
             "gif": os.path.join(base_dir, "video_township_quarters.gif"),
@@ -221,7 +221,7 @@ def get_cctv_feeds():
         {
             "id": "CAM-08",
             "name": "Welspun City Health Centre & Vidya Mandir",
-            "zone": "Welspun City (Living Quarters)",
+            "zone": "Welspun City (Township Quarters)",
             "sector": "Community Campus Hub",
             "video": os.path.join(base_dir, "video_township_quarters.mp4"),
             "gif": os.path.join(base_dir, "video_township_quarters.gif"),
