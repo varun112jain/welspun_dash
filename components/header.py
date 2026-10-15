@@ -32,8 +32,8 @@ def render_welspun_header(
             <div style="display:flex; align-items:center; gap:14px; min-width:0; flex-shrink:1;">
                 {logo_html}
                 <div style="border-left: 2px solid rgba(255,255,255,0.25); padding-left: 12px; min-width:0;">
-                    <div style="font-size:0.65rem; font-weight:700; letter-spacing:0.08em; color:#38BDF8; margin-bottom:1px; text-transform:uppercase;">
-                        ENTERPRISE SURVEILLANCE &amp; FIRE COMMAND HUB
+                    <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.1em; color:#38BDF8; margin-bottom:2px; text-transform:uppercase;">
+                        WELSPUN GROUP • ANJAR MEGA COMPLEX
                     </div>
                     <h1 class="welspun-header-title">{title}</h1>
                     <p class="welspun-header-subtitle">{subtitle}</p>

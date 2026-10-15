@@ -17,9 +17,28 @@
     --card-hover-shadow: 0 8px 24px rgba(0, 91, 170, 0.16);
 }
 
+/* Eliminate Streamlit fixed header white band occlusion */
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    height: 2.8rem !important;
+    pointer-events: none;
+}
+
+header[data-testid="stHeader"] * {
+    pointer-events: auto;
+}
+
+[data-testid="stDecoration"] {
+    display: none !important;
+    height: 0 !important;
+}
+
 /* Page Layout */
 .block-container {
-    padding-top: 1.2rem !important;
+    padding-top: 3.4rem !important;
     padding-bottom: 2.5rem !important;
     max-width: 96% !important;
 }
@@ -27,7 +46,7 @@
 /* Welspun Command Header */
 .welspun-header-card {
     background: linear-gradient(135deg, #07192F 0%, #005BAA 65%, #00A6E6 100%);
-    padding: 0.85rem 1.6rem;
+    padding: 1.0rem 1.6rem;
     border-radius: 12px;
     color: #ffffff;
     box-shadow: 0 8px 24px rgba(0, 91, 170, 0.25);
@@ -35,7 +54,10 @@
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    margin-top: 0.2rem;
     margin-bottom: 1.1rem;
+    position: relative;
+    z-index: 10;
 }
 
 .welspun-header-title {
