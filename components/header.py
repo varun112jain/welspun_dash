@@ -15,7 +15,7 @@ def get_welspun_logo_b64():
 
 def render_welspun_header(
     title: str = "Welspun Command & Control Centre (ICCC)",
-    subtitle: str = "24/7 AI Multi-Screen CCTV Surveillance, Fire Network & Safety Intelligence • Anjar Complex",
+    subtitle: str = "24/7 AI Multi-Screen CCTV Surveillance, Fire Network & Safety Intelligence • Welspun City, Anjar",
     badge_text: str = "LIVE DEFENSE MESH",
     days_incident_free: int = 148,
     online_cameras: int = 1424,

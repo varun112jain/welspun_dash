@@ -21,18 +21,18 @@ def render_anjar_spatial_map() -> go.Figure:
         text=["Dual-Loop Hydrant Line - 8.6 Bar"] * len(ring_x)
     ))
     
-    # 2. Industrial Plant Sectors
+    # 2. Welspun City Industrial Manufacturing Sectors
     plant_nodes = [
-        {"name": "Sector 1: Welspun Pipe & Steel Mill", "x": 2.5, "y": 2.5, "type": "Industrial Plant", "status": "Normal", "cameras": 310, "temp": "27°C"},
-        {"name": "Sector 2: Welspun Textile & Spunlace", "x": 4.5, "y": 3.0, "type": "Industrial Plant", "status": "Normal", "cameras": 420, "temp": "28°C"},
-        {"name": "Sector 3: Advanced Flooring Unit", "x": 6.8, "y": 3.5, "type": "Industrial Plant", "status": "Normal", "cameras": 190, "temp": "26°C"},
-        {"name": "Sector 4: Chemical & Thermal Utility Hub", "x": 3.5, "y": 4.2, "type": "Critical Utility", "status": "🔥 THERMAL ALERT", "cameras": 85, "temp": "98.4°C"}
+        {"name": "WCL: LSAW & Spiral (HSAW) Pipe Mills", "x": 2.5, "y": 2.5, "type": "WCL Heavy Line Pipes", "status": "Normal", "cameras": 414, "temp": "27°C"},
+        {"name": "WDI: 500k TPA Blast Furnace, Sinter & DI Pipe Foundry", "x": 4.5, "y": 2.8, "type": "WDI Blast Furnace & DI Pipes", "status": "Normal", "cameras": 406, "temp": "1,480°C Hot Metal / 31°C Amb"},
+        {"name": "WLL: Home Textiles & Advanced Spunlace", "x": 6.8, "y": 3.5, "type": "WLL Textiles & Non-Woven", "status": "Normal", "cameras": 392, "temp": "26°C"},
+        {"name": "Energy: 123 MW Captive Thermal Plant & 42 MW Solar", "x": 3.5, "y": 4.2, "type": "Captive Energy Hub", "status": "🔥 THERMAL ALERT", "cameras": 126, "temp": "98.4°C"}
     ]
     
     px_coords = [n["x"] for n in plant_nodes]
     py_coords = [n["y"] for n in plant_nodes]
     p_text = [
-        f"<b>{n['name']}</b><br>Type: {n['type']}<br>Status: {n['status']}<br>Cameras: {n['cameras']}<br>Temp: {n['temp']}"
+        f"<b>{n['name']}</b><br>Division: {n['type']}<br>Status: {n['status']}<br>Cameras: {n['cameras']}<br>Temp: {n['temp']}"
         for n in plant_nodes
     ]
     p_colors = ["#EF4444" if "ALERT" in n["status"] else "#005BAA" for n in plant_nodes]
@@ -40,20 +40,20 @@ def render_anjar_spatial_map() -> go.Figure:
     fig.add_trace(go.Scatter(
         x=px_coords, y=py_coords,
         mode="markers+text",
-        name="Plant Manufacturing Sectors",
-        text=["Pipe Mill", "Textile Mill", "Flooring Hub", "Sector 4 (Alert)"],
+        name="Welspun Manufacturing & Energy Hubs",
+        text=["WCL Pipe Mills (LSAW/Spiral)", "WDI Blast Furnace & DI Pipes", "WLL Home & Spunlace", "123MW CPP & Solar (Alert)"],
         textposition="bottom center",
         marker=dict(size=[18, 18, 16, 22], color=p_colors, symbol="square", line=dict(color="#FFFFFF", width=2)),
         hoverinfo="text",
         hovertext=p_text
     ))
     
-    # 3. Welspun City Township (Township Quarters)
+    # 3. Welspun City Township & Community Infrastructure
     city_nodes = [
         {"name": "Welspun City: Residential Quarters (Aura Gardens)", "x": 6.5, "y": 7.0, "type": "Township Quarters", "status": "Normal", "cameras": 140},
         {"name": "Welspun City: Senior & Staff Hostels", "x": 8.0, "y": 6.2, "type": "Township Quarters", "status": "Normal", "cameras": 95},
-        {"name": "Welspun City: Multi-Speciality Health Centre", "x": 5.2, "y": 7.5, "type": "Community / Hospital", "status": "Optimal", "cameras": 45},
-        {"name": "Welspun Vidya Mandir School Campus", "x": 7.2, "y": 8.2, "type": "Community / School", "status": "Optimal", "cameras": 60}
+        {"name": "Welspun Multi-Speciality Health Centre", "x": 5.2, "y": 7.5, "type": "Community / Hospital", "status": "Optimal", "cameras": 45},
+        {"name": "Welspun Vidya Mandir School Campus", "x": 7.2, "y": 8.2, "type": "Community / School", "status": "Optimal", "cameras": 68}
     ]
     
     cx_coords = [n["x"] for n in city_nodes]
@@ -66,8 +66,8 @@ def render_anjar_spatial_map() -> go.Figure:
     fig.add_trace(go.Scatter(
         x=cx_coords, y=cy_coords,
         mode="markers+text",
-        name="Welspun City (Township Quarters)",
-        text=["Residential Quarters", "Staff Hostels", "Health Centre", "School"],
+        name="Welspun City Township & Campus",
+        text=["Residential Quarters", "Staff Hostels", "Health Centre", "Vidya Mandir School"],
         textposition="top center",
         marker=dict(size=16, color="#00A6E6", symbol="circle", line=dict(color="#FFFFFF", width=2)),
         hoverinfo="text",
@@ -76,8 +76,8 @@ def render_anjar_spatial_map() -> go.Figure:
     
     # 4. Networked Fire Stations (Station Alpha & Station Bravo)
     fs_nodes = [
-        {"name": "Fire Station Alpha (Plant Core)", "x": 3.8, "y": 2.2, "tenders": 3, "crew": 16, "status": "Active / QRV Dispatched"},
-        {"name": "Fire Station Bravo (Welspun City Hub)", "x": 6.2, "y": 6.5, "tenders": 2, "crew": 10, "status": "Ready Standby"}
+        {"name": "Fire Station Alpha (Heavy Industrial Core: WCL, WDI Blast Furnace, CPP)", "x": 3.6, "y": 2.2, "tenders": 3, "crew": 16, "status": "Active / QRV Dispatched"},
+        {"name": "Fire Station Bravo (Welspun City Township Hub)", "x": 6.2, "y": 6.5, "tenders": 2, "crew": 10, "status": "Ready Standby"}
     ]
     
     fs_x = [n["x"] for n in fs_nodes]
@@ -91,7 +91,7 @@ def render_anjar_spatial_map() -> go.Figure:
         x=fs_x, y=fs_y,
         mode="markers+text",
         name="Networked Fire Stations",
-        text=["🚒 Station Alpha (Plant)", "🚒 Station Bravo (City)"],
+        text=["🚒 Station Alpha (WCL/WDI BF/CPP)", "🚒 Station Bravo (Township)"],
         textposition="bottom right",
         marker=dict(size=22, color="#EF4444", symbol="star", line=dict(color="#FED7AA", width=2)),
         hoverinfo="text",
@@ -101,8 +101,8 @@ def render_anjar_spatial_map() -> go.Figure:
     # Styling layout
     fig.update_layout(
         title={
-            "text": "Anjar Plant & Welspun City Surveillance & Emergency Topology",
-            "font": {"size": 15, "color": WELSPUN_COLORS["deep_navy"], "weight": 700}
+            "text": "Welspun City, Anjar — Industrial Mills, Energy & Township Spatial Topology",
+            "font": {"size": 14, "color": WELSPUN_COLORS["deep_navy"], "weight": 700}
         },
         height=380,
         margin=dict(l=10, r=10, t=40, b=10),

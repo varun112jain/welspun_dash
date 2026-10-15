@@ -55,48 +55,51 @@ def get_sensor_health_telemetry():
             }
         ],
         "sector_breakdown": [
-            {"sector": "Sector 1: Welspun Pipe & Steel Mill", "sensors": 850, "health": "99.8%", "status": "Optimal", "last_test": "Today, 06:00"},
-            {"sector": "Sector 2: Welspun Textile & Spunlace", "sensors": 1120, "health": "99.1%", "status": "Optimal", "last_test": "Today, 06:15"},
-            {"sector": "Sector 3: Advanced Flooring Unit", "sensors": 540, "health": "99.6%", "status": "Optimal", "last_test": "Today, 06:30"},
-            {"sector": "Sector 4: Chemical & Thermal Utility Hub", "sensors": 380, "health": "97.4%", "status": "Alert Active", "last_test": "Continuous"},
-            {"sector": "Welspun City: Residential Quarters & Hostels", "sensors": 530, "health": "100.0%", "status": "Optimal", "last_test": "Today, 07:00"}
+            {"sector": "WCL: LSAW & Spiral (HSAW) Pipe Mills", "sensors": 850, "health": "99.8%", "status": "Optimal", "last_test": "Today, 06:00"},
+            {"sector": "WDI: 500k TPA Blast Furnace, Sinter & DI Pipe Foundry", "sensors": 640, "health": "99.4%", "status": "Optimal", "last_test": "Today, 06:10"},
+            {"sector": "WLL: Home Textiles & Advanced Spunlace Facility", "sensors": 1020, "health": "99.1%", "status": "Optimal", "last_test": "Today, 06:15"},
+            {"sector": "Energy: 123 MW Captive Thermal Plant & 42 MW Solar", "sensors": 380, "health": "97.4%", "status": "Alert Active", "last_test": "Continuous"},
+            {"sector": "Welspun City: Township, Vidya Mandir & Health Centre", "sensors": 530, "health": "100.0%", "status": "Optimal", "last_test": "Today, 07:00"}
         ]
     }
 
 def get_camera_network_telemetry():
-    """Returns detailed online/total statistics for the entire CCTV camera network."""
+    """Returns detailed online/total statistics for the entire CCTV camera network across Welspun City."""
     return {
         "total_cameras": 1438,
         "online_cameras": 1424,
         "offline_cameras": 14,
         "uptime_pct": 99.03,
-        "plant_core": {"online": 812, "total": 820, "pct": 99.0},
-        "perimeter_gates": {"online": 216, "total": 218, "pct": 99.1},
+        "wcl_pipes": {"online": 410, "total": 414, "pct": 99.0},
+        "wdi_ductile": {"online": 402, "total": 406, "pct": 99.0},
+        "wll_textiles": {"online": 390, "total": 392, "pct": 99.5},
+        "cpp_solar": {"online": 124, "total": 126, "pct": 98.4},
         "welspun_city": {"online": 348, "total": 350, "pct": 99.4},
+        "perimeter_gates": {"online": 216, "total": 218, "pct": 99.1},
         "emergency_fire": {"online": 48, "total": 50, "pct": 96.0}
     }
 
 def get_surveillance_kpis():
-    """Returns top-level KPIs for Anjar Plant & City surveillance."""
+    """Returns top-level KPIs for Welspun City, Anjar surveillance."""
     return {
         "cameras_online": {"value": "1,424 / 1,438", "sub": "99.0% Active • 14 Maint.", "status": "optimal", "label": "Active CCTV Feeds"},
         "days_incident_free": {"value": "148 Days", "sub": "4.82M Safe Man-Hours", "status": "optimal", "label": "Safety Milestone"},
-        "perimeter_crossings": {"value": "1 Breach", "sub": "Sector 4 West Tripwire", "status": "critical", "label": "Perimeter Crossing"},
-        "active_fire_alarms": {"value": "1 Alert", "sub": "Sector 4 Thermal Anomaly", "status": "critical", "label": "Active Fire & Alarms"},
+        "perimeter_crossings": {"value": "1 Breach", "sub": "220kV Yard Perimeter", "status": "critical", "label": "Perimeter Crossing"},
+        "active_fire_alarms": {"value": "1 Alert", "sub": "123MW CPP Steam Header", "status": "critical", "label": "Active Fire & Alarms"},
         "sensor_health": {"value": "99.4%", "sub": "3,398 / 3,420 Detectors", "status": "optimal", "label": "Smoke & Fire Sensors"},
-        "fire_station_readiness": {"value": "Station 01 & 02", "sub": "4 Tenders • Hydrant 8.6 Bar", "status": "optimal", "label": "Fire Command Hub"}
+        "fire_station_readiness": {"value": "Station Alpha & Bravo", "sub": "5 Tenders • Hydrant 8.6 Bar", "status": "optimal", "label": "Fire Command Hub"}
     }
 
 def get_cctv_feeds():
-    """Returns 8 active CCTV screens across Welspun Anjar Plant, Perimeter, and Township Quarters."""
+    """Returns 8 active CCTV screens across Welspun City (WCL, WDI, WLL, 123MW CPP, Solar, and Township)."""
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
     
     return [
         {
             "id": "CAM-04",
-            "name": "Restricted Perimeter & Substation Fence",
-            "zone": "Plant Perimeter (Restricted)",
-            "sector": "Sector 4 - West Tripwire Boundary",
+            "name": "220kV Grid Substation & Hazmat Yard",
+            "zone": "Welspun City Perimeter & 220kV Grid",
+            "sector": "Captive Power Grid - West Boundary",
             "video": os.path.join(base_dir, "video_perimeter_breach.mp4"),
             "gif": os.path.join(base_dir, "video_perimeter_breach.gif"),
             "image": os.path.join(base_dir, "cctv_perimeter_fence.jpg"),
@@ -105,16 +108,16 @@ def get_cctv_feeds():
             "activity_rank": 1,
             "fps": 15,
             "bitrate": "4.8 Mbps",
-            "ai_features": ["Virtual Laser Tripwire", "Unauthorized Person Intrusion", "Night IR Motion"],
-            "ai_summary": "🚨 INTRUSION ALERT: Subject crossed Virtual Tripwire Line into high-voltage yard. Horn sounded.",
+            "ai_features": ["Virtual Laser Tripwire", "220kV Substation Radar", "Photographic Intruder AI"],
+            "ai_summary": "🚨 INTRUSION ALERT: Subject crossed Virtual Tripwire near 220kV switchyard feeding WCL mills, WDI Blast Furnace & WLL plant. Security QRT dispatched.",
             "thermal_temp": "24.6°C",
             "alert_badge": "PERIMETER CROSSING ACTIVE"
         },
         {
             "id": "CAM-02",
-            "name": "Chemical & Thermal Pipeline Grid",
-            "zone": "Plant Core (Industrial)",
-            "sector": "Sector 4 - Utility Hub",
+            "name": "123 MW Captive Thermal Plant & Solar Array",
+            "zone": "123 MW Captive Thermal Plant & Solar",
+            "sector": "CPP Unit 2 - Steam Header & Boiler Loop",
             "video": os.path.join(base_dir, "video_thermal_hotspot.mp4"),
             "gif": os.path.join(base_dir, "video_thermal_hotspot.gif"),
             "image": os.path.join(base_dir, "cctv_thermal_hotspot.jpg"),
@@ -123,34 +126,34 @@ def get_cctv_feeds():
             "activity_rank": 2,
             "fps": 15,
             "bitrate": "3.8 Mbps",
-            "ai_features": ["FLIR Radiometric Heatmap", "Hot Spot Alarm (>90°C)", "Line Pressure Sync"],
-            "ai_summary": "🔥 DANGER: Hot spot on Valve HX-104 (98.4°C vs threshold 85°C). Cooling mitigation dispatched.",
+            "ai_features": ["FLIR Radiometric Heatmap", "123MW Steam Header Sensor", "42MW Solar Inverter Sync"],
+            "ai_summary": "🔥 DANGER: Hot spot on HP Steam Header HX-104 (98.4°C vs limit 85°C). 42 MW solar array delivering 38.6 MW.",
             "thermal_temp": "98.4°C (Limit: 85°C)",
             "alert_badge": "HOT SPOT DETECTED"
         },
         {
             "id": "CAM-01",
-            "name": "Textile Weaving & Spinning Mill",
-            "zone": "Plant Core (Industrial)",
-            "sector": "Sector 2 - Textile Bay 3",
+            "name": "WDI 500k TPA Blast Furnace & DI Casting Bay",
+            "zone": "WDI Blast Furnace & Metallurgical Complex",
+            "sector": "MBF Tap Hole, Tuyere Gallery & DI Centrifugal Casting",
             "video": os.path.join(base_dir, "video_plant_mill.mp4"),
             "gif": os.path.join(base_dir, "video_plant_mill.gif"),
             "image": os.path.join(base_dir, "cctv_plant_spinning.jpg"),
-            "status": "NORMAL",
-            "status_color": "#10B981",
+            "status": "OPTIMAL",
+            "status_color": "#005BAA",
             "activity_rank": 4,
             "fps": 15,
             "bitrate": "4.2 Mbps",
-            "ai_features": ["AI PPE Helmet/Vest Compliance", "Forklift Lane Safety", "Loom Smoke Sensor"],
-            "ai_summary": "All personnel 100% PPE compliant. Forklift speed: 6 km/h. Zero safety violations.",
-            "thermal_temp": "28.4°C",
-            "alert_badge": "ZONE NORMAL"
+            "ai_features": ["Tuyere & Tap Hole Thermal AI (1,480°C)", "BFG / CO Gas Sensor Network", "Hot Metal Ladle Car Clearance AI"],
+            "ai_summary": "500k TPA Blast Furnace tapping hot metal at 1,480°C into ladle car. Sinter feed & PCI rates nominal. BFG gas scrubbers optimal. DN 600 DI centrifugal pipe casting active.",
+            "thermal_temp": "1,480°C (Tap Hole) / 28.4°C Ambient",
+            "alert_badge": "BLAST FURNACE & DI OPTIMAL"
         },
         {
             "id": "CAM-03",
-            "name": "Networked Fire Station Bay 01",
-            "zone": "Emergency Services",
-            "sector": "Central Command Station Alpha",
+            "name": "Fire Station Alpha (Heavy Industrial Core)",
+            "zone": "Emergency Services Hub",
+            "sector": "Station Alpha - Near WCL Mills, WDI Blast Furnace & CPP",
             "video": os.path.join(base_dir, "video_fire_station.mp4"),
             "gif": os.path.join(base_dir, "video_fire_station.gif"),
             "image": os.path.join(base_dir, "cctv_fire_station.jpg"),
@@ -159,15 +162,15 @@ def get_cctv_feeds():
             "activity_rank": 3,
             "fps": 15,
             "bitrate": "6.0 Mbps",
-            "ai_features": ["Tender Ready Beacon", "Crew Muster Telemetry", "Dispatch Console Active"],
-            "ai_summary": "Tender 01 & 04 armed and running. Emergency command console manned 24/7.",
+            "ai_features": ["Foam Tender Ready Beacon", "Hazmat Muster Console", "8.6 Bar Hydrant Ring Sync"],
+            "ai_summary": "Foam Tender 01 & 04 armed for Blast Furnace, DI Foundry & Chemical lines. Ring hydrant loop at 8.6 Bar.",
             "thermal_temp": "24.1°C",
             "alert_badge": "DISPATCH READY"
         },
         {
             "id": "CAM-05",
-            "name": "Welspun City Township - Aura Gardens",
-            "zone": "Welspun City (Township Quarters)",
+            "name": "Welspun City Township - Aura Gardens & Quarters",
+            "zone": "Welspun City Township",
             "sector": "Residential Block C & Main Boulevard",
             "video": os.path.join(base_dir, "video_township_quarters.mp4"),
             "gif": os.path.join(base_dir, "video_township_quarters.gif"),
@@ -177,16 +180,16 @@ def get_cctv_feeds():
             "activity_rank": 5,
             "fps": 15,
             "bitrate": "5.4 Mbps",
-            "ai_features": ["Pedestrian Crosswalk Radar", "Speed Radar (Limit: 30 km/h)", "Night Perimeter Beam"],
-            "ai_summary": "Normal residential movement. 5 pedestrians detected. Vehicle speed: 18 km/h (compliant).",
+            "ai_features": ["Township Crosswalk Radar", "Speed Radar (Limit: 30 km/h)", "Night Perimeter Beam"],
+            "ai_summary": "Normal township movement. 5 residents tracked. Vehicle speed: 18 km/h (within 30 km/h limit). Zero violations.",
             "thermal_temp": "22.8°C",
-            "alert_badge": "TOWNSHIP NORMAL"
+            "alert_badge": "TOWNSHIP SECURE"
         },
         {
             "id": "CAM-06",
-            "name": "Pipe & Steel Mill Gantry Crane Zone",
-            "zone": "Plant Core (Industrial)",
-            "sector": "Sector 1 - Heavy Pipe Bay Alpha",
+            "name": "WCL Line Pipe Mills: LSAW & Spiral (HSAW)",
+            "zone": "WCL Large Diameter Pipe Mills",
+            "sector": "WCL Mill 1 - Heavy LSAW & Spiral Seam Bay",
             "video": os.path.join(base_dir, "video_plant_mill.mp4"),
             "gif": os.path.join(base_dir, "video_plant_mill.gif"),
             "image": os.path.join(base_dir, "cctv_plant_spinning.jpg"),
@@ -195,16 +198,16 @@ def get_cctv_feeds():
             "activity_rank": 6,
             "fps": 15,
             "bitrate": "4.5 Mbps",
-            "ai_features": ["Overhead Crane Zone Clearance", "Suspended Load Proximity", "Worker Exclusions"],
-            "ai_summary": "Gantry crane active. Red exclusion zone 100% clear of floor workers.",
+            "ai_features": ["56\" LSAW Seam Ultrasonic AI", "Spiral/HSAW Forming Clearance", "Overhead Gantry Exclusion"],
+            "ai_summary": "LSAW 56\" API line pipe submerged arc welding running. Hydrotester at 210 Bar. Gantry exclusion zone 100% clear.",
             "thermal_temp": "29.1°C",
-            "alert_badge": "ZONE NORMAL"
+            "alert_badge": "MILLS NORMAL"
         },
         {
             "id": "CAM-07",
-            "name": "Anjar Main Gate 1 & Weighbridge",
-            "zone": "Logistics & Perimeter",
-            "sector": "North Perimeter Gate",
+            "name": "WLL Home Textiles & Advanced Spunlace Facility",
+            "zone": "WLL Home & Advanced Textiles",
+            "sector": "WLL Plant 3 - Terry Towels & Spunlace Non-Woven",
             "video": os.path.join(base_dir, "video_perimeter_breach.mp4"),
             "gif": os.path.join(base_dir, "video_perimeter_breach.gif"),
             "image": os.path.join(base_dir, "cctv_perimeter_fence.jpg"),
@@ -213,16 +216,16 @@ def get_cctv_feeds():
             "activity_rank": 7,
             "fps": 15,
             "bitrate": "5.0 Mbps",
-            "ai_features": ["Automated Number Plate ANPR", "Cargo Hazmat Tag Reader", "Driver Facial Muster"],
-            "ai_summary": "Trailer GJ-12-BV-9021 cleared at weighbridge. Zero unauthorized vehicles.",
+            "ai_features": ["Spunlace Hydro-Entangle AI", "Air-Jet Loom Lint Watchdog", "Worker PPE Compliance"],
+            "ai_summary": "Advanced Spunlace line producing 50 GSM wipes fabric. All 48 air-jet looms running at 94% efficiency. Zero lint sparks.",
             "thermal_temp": "25.2°C",
-            "alert_badge": "GATE CLEAR"
+            "alert_badge": "TEXTILES OPTIMAL"
         },
         {
             "id": "CAM-08",
-            "name": "Welspun City Health Centre & Vidya Mandir",
-            "zone": "Welspun City (Township Quarters)",
-            "sector": "Community Campus Hub",
+            "name": "Welspun Vidya Mandir & Health Centre",
+            "zone": "Welspun City Township",
+            "sector": "Vidya Mandir Campus & Hospital Bay",
             "video": os.path.join(base_dir, "video_township_quarters.mp4"),
             "gif": os.path.join(base_dir, "video_township_quarters.gif"),
             "image": os.path.join(base_dir, "cctv_township_quarters.jpg"),
@@ -231,8 +234,8 @@ def get_cctv_feeds():
             "activity_rank": 8,
             "fps": 15,
             "bitrate": "4.1 Mbps",
-            "ai_features": ["Child Safety Perimeter", "Ambulance Bay Keep-Clear", "Smoke Sensor Sync"],
-            "ai_summary": "Ambulance emergency bay 100% unobstructed. School perimeter fence secure.",
+            "ai_features": ["Vidya Mandir Safety Boundary", "Hospital Ambulance Priority", "Rooftop Solar PV Monitor"],
+            "ai_summary": "Hospital ambulance slipway 100% unobstructed. Vidya Mandir school perimeter secured. 1.2 MW rooftop solar active.",
             "thermal_temp": "23.4°C",
             "alert_badge": "CAMPUS SECURE"
         }
@@ -244,18 +247,18 @@ def get_fire_network_status():
         "stations": [
             {
                 "id": "FS-01",
-                "name": "Station Alpha (Plant Industrial Hub)",
+                "name": "Station Alpha (Heavy Industrial Core)",
                 "readiness": "100% OPERATIONAL",
                 "crew_on_duty": 16,
-                "coverage": "Pipe Mill, Textile Division, Steel Fabrication, Warehouses",
-                "distance_to_core": "0.4 km"
+                "coverage": "WCL (LSAW & Spiral Mills), WDI (500k TPA Blast Furnace, Sinter Plant & DI Foundry), 123 MW Captive Power Plant",
+                "distance_to_core": "0.3 km"
             },
             {
                 "id": "FS-02",
-                "name": "Station Bravo (Welspun City Hub)",
+                "name": "Station Bravo (Welspun City Township Hub)",
                 "readiness": "100% OPERATIONAL",
                 "crew_on_duty": 10,
-                "coverage": "Residential Township, School, Hospital, Commercial Plaza",
+                "coverage": "Welspun City Quarters, Vidya Mandir School, Health Centre & 42 MW Solar Array",
                 "distance_to_core": "1.2 km"
             }
         ],
@@ -263,7 +266,7 @@ def get_fire_network_status():
             {"id": "WF-01", "name": "Heavy Water Bowser (12,000L)", "station": "Station Alpha", "status": "Ready", "fuel": "98%", "foam_lvl": "100%"},
             {"id": "WF-02", "name": "Industrial Foam Crash Tender", "station": "Station Alpha", "status": "Ready", "fuel": "95%", "foam_lvl": "94%"},
             {"id": "WF-03", "name": "Hydraulic Sky-Lift & Rescue (32m)", "station": "Station Bravo", "status": "Ready", "fuel": "92%", "foam_lvl": "N/A"},
-            {"id": "WF-04", "name": "Quick Response Vehicle (QRV)", "station": "Station Alpha", "status": "Dispatched (Sector 4)", "fuel": "88%", "foam_lvl": "100%"}
+            {"id": "WF-04", "name": "Quick Response Vehicle (QRV)", "station": "Station Alpha", "status": "Dispatched (CPP)", "fuel": "88%", "foam_lvl": "100%"}
         ],
         "hydrant_telemetry": {
             "main_ring_pressure_bar": 8.6,
@@ -277,40 +280,40 @@ def get_fire_network_status():
     }
 
 def get_active_alarms():
-    """Returns active and recent safety/fire incidents in Anjar Plant & City."""
+    """Returns active and recent safety/fire incidents in Welspun City, Anjar."""
     from datetime import datetime, timedelta
     now = datetime.now()
     return [
         {
             "id": "ALM-9025",
             "time": (now - timedelta(minutes=1)).strftime("%H:%M:%S"),
-            "location": "Sector 4 - West Substation Tripwire Line",
-            "zone": "Plant Restricted Perimeter",
+            "location": "220kV Grid Substation - West Tripwire Line",
+            "zone": "Welspun City Substation Perimeter",
             "type": "🚷 Perimeter Crossing (Unauthorized Area Intrusion)",
             "severity": "CRITICAL",
-            "details": "AI Camera CAM-04 detected unauthorized subject crossing virtual laser parameter boundary into high-voltage chemical yard.",
+            "details": "AI Camera CAM-04 detected unauthorized subject crossing virtual laser boundary near 220kV grid feeding WCL line pipe mills, WDI Blast Furnace & WLL textiles.",
             "action_taken": "Security Quick Response Patrol dispatched; audible boundary warning siren triggered.",
             "status": "In Progress"
         },
         {
             "id": "ALM-9021",
             "time": (now - timedelta(minutes=5)).strftime("%H:%M:%S"),
-            "location": "Sector 4 - Chemical Valve Hub HX-104",
-            "zone": "Plant Core",
+            "location": "123 MW Captive Thermal Plant - HP Steam Header HX-104",
+            "zone": "Captive Power Generation (CPP)",
             "type": "🔥 Thermal Anomaly (Hot Spot >90°C)",
             "severity": "CRITICAL",
-            "details": "FLIR camera detected surface temperature reaching 98.4°C on thermal oil line.",
+            "details": "FLIR camera detected surface temperature reaching 98.4°C on high-pressure steam distribution header.",
             "action_taken": "QRV Unit WF-04 dispatched for thermal mitigation & isolation check.",
             "status": "In Progress"
         },
         {
             "id": "ALM-9018",
             "time": (now - timedelta(minutes=27)).strftime("%H:%M:%S"),
-            "location": "Spinning Unit 2 - Lint Collection Filter",
-            "zone": "Textile Plant",
+            "location": "WLL Plant 3 - Advanced Spunlace Air Filtration Unit",
+            "zone": "WLL Home & Advanced Textiles",
             "type": "💨 Smoke Ionization Drift",
             "severity": "WARNING",
-            "details": "Particulate density increased above baseline threshold. Auto-ventilation cycled.",
+            "details": "Particulate sensor detected micro-lint drift on hydro-entangling exhaust. Automated HEPA cycle purge cleared.",
             "action_taken": "Filter purge completed. Normal baseline restored.",
             "status": "Resolved"
         },

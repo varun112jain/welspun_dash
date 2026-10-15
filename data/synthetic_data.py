@@ -38,11 +38,11 @@ def get_timeseries_performance(days: int = 30):
 def get_division_breakdown():
     """Generates synthetic breakdown across key Welspun businesses."""
     divisions = [
-        {"Division": "Welspun Corp (Pipes & Steel)", "Revenue_Cr": 1240, "Volume_MT": 94500, "Plants": 6, "Efficiency": 93.4},
-        {"Division": "Welspun Advanced Textiles & Home", "Revenue_Cr": 980, "Volume_MT": 68000, "Plants": 4, "Efficiency": 91.8},
-        {"Division": "Welspun Enterprises (Infra)", "Revenue_Cr": 720, "Volume_MT": 45000, "Plants": 3, "Efficiency": 89.6},
-        {"Division": "Welspun Flooring", "Revenue_Cr": 390, "Volume_MT": 24000, "Plants": 2, "Efficiency": 94.1},
-        {"Division": "Welspun New Energy", "Revenue_Cr": 280, "Volume_MT": 16500, "Plants": 2, "Efficiency": 96.0}
+        {"Division": "WCL (LSAW & Spiral Line Pipes)", "Revenue_Cr": 1420, "Volume_MT": 112000, "Plants": 4, "Efficiency": 94.6},
+        {"Division": "WDI (500k TPA Blast Furnace & DI Pipes)", "Revenue_Cr": 860, "Volume_MT": 62000, "Plants": 2, "Efficiency": 93.1},
+        {"Division": "WLL (Home Textiles & Advanced Spunlace)", "Revenue_Cr": 1180, "Volume_MT": 84000, "Plants": 4, "Efficiency": 92.8},
+        {"Division": "Welspun Energy (123 MW CPP & 42 MW Solar)", "Revenue_Cr": 490, "Volume_MT": 32000, "Plants": 2, "Efficiency": 97.4},
+        {"Division": "Welspun City Infrastructure & Township", "Revenue_Cr": 260, "Volume_MT": 15000, "Plants": 1, "Efficiency": 98.2}
     ]
     return pd.DataFrame(divisions)
 

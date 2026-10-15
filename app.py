@@ -61,10 +61,17 @@ with st.sidebar:
     
     st.markdown(
         """
-        <div style="background:#0F172A; color:#E2E8F0; padding:10px 14px; border-radius:8px; margin-top:8px; border-left:4px solid #00A6E6;">
-            <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:#94A3B8;">Enterprise Facility</div>
-            <div style="font-size:1.05rem; font-weight:700;">WELSPUN ANJAR</div>
-            <div style="font-size:0.8rem; color:#38BDF8;">Mega Industrial Plants & Welspun City Township</div>
+        <div style="background:#0F172A; color:#E2E8F0; padding:12px 14px; border-radius:8px; margin-top:8px; border-left:4px solid #00A6E6;">
+            <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:#94A3B8;">2,500-Acre Integrated Complex</div>
+            <div style="font-size:1.15rem; font-weight:800; color:#FFFFFF;">WELSPUN CITY, ANJAR</div>
+            <div style="font-size:0.78rem; color:#38BDF8; margin-top:2px;">Heavy Industrial Mills, Energy &amp; Township</div>
+            <div style="margin-top:8px; font-size:0.74rem; color:#CBD5E1; line-height:1.45; border-top:1px solid #1E293B; padding-top:6px;">
+                • <b>WCL</b>: LSAW &amp; Spiral (HSAW) Pipes<br>
+                • <b>WDI</b>: 500k TPA Blast Furnace, Sinter &amp; DI Pipes<br>
+                • <b>WLL</b>: Home Textiles &amp; Spunlace Non-Woven<br>
+                • <b>Energy</b>: 123 MW Captive Thermal &amp; 42 MW Solar<br>
+                • <b>Township</b>: Welspun City, Vidya Mandir &amp; Hospital
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -84,10 +91,13 @@ with st.sidebar:
         "Screen Sector Filter",
         [
             "🖥️ All 8 Active Screens (Master Wall)",
-            "🏭 Industrial Manufacturing Plants (CAM-01, 02, 06)",
-            "🚷 Perimeter & High-Voltage Gates (CAM-04, 07)",
-            "🏡 Welspun City Township & Campus (CAM-05, 08)",
-            "🚒 Fire Station Emergency Bay (CAM-03)"
+            "🏭 WCL Line Pipe Mills: LSAW & Spiral (CAM-06)",
+            "🔩 WDI 500k TPA Blast Furnace & DI Pipe Plant (CAM-01)",
+            "🧵 WLL Home & Advanced Spunlace Textiles (CAM-07)",
+            "⚡ 123 MW Captive Thermal Plant & Solar Array (CAM-02)",
+            "🚷 220kV Grid Substation Perimeter Fence (CAM-04)",
+            "🏡 Welspun City Township & Vidya Mandir (CAM-05, 08)",
+            "🚒 Dual Fire Command Hub: Station Alpha & Bravo (CAM-03)"
         ]
     )
     
@@ -133,7 +143,7 @@ with st.sidebar:
 # Welspun Header Banner (Updated to WELSPUN & Days Since Last Incident)
 render_welspun_header(
     title="Welspun Command & Control Centre (ICCC)",
-    subtitle="AI Multi-Screen CCTV Surveillance, Fire Network & Safety Intelligence • Anjar Complex",
+    subtitle="24/7 AI Multi-Screen CCTV Surveillance, Fire Network & Safety Intelligence • Welspun City, Anjar",
     badge_text="LIVE DEFENSE MESH",
     days_incident_free=safety_stats["days_since_last_incident"]
 )
@@ -203,36 +213,44 @@ tab_video, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
     "🔥 Smoke & Fire Sensor Health",
     "🚒 Networked Fire Station Hub",
     "⚠️ Live Alarms & Security Log",
-    "🗺️ Anjar Spatial Topology Map"
+    "🗺️ Welspun City Spatial Topology Map"
 ])
 
 # ----------------- TAB 1: CCTV FEEDS -----------------
 with tab_video:
     # Filter feeds by sector if user selected a subset
     display_feeds = cctv_feeds
-    if "Industrial" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "Plant Core" in f["zone"]]
-    elif "Perimeter" in feed_filter:
-        display_feeds = [f for f in cctv_feeds if "Perimeter" in f["zone"] or "Gate" in f["name"]]
-    elif "Township" in feed_filter or "City" in feed_filter:
+    if "WCL" in feed_filter or "LSAW" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if "WCL" in f["zone"] or "WCL" in f["name"]]
+    elif "WDI" in feed_filter or "Blast Furnace" in feed_filter or "Ductile" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if "WDI" in f["zone"] or "WDI" in f["name"]]
+    elif "WLL" in feed_filter or "Spunlace" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if "WLL" in f["zone"] or "WLL" in f["name"]]
+    elif "Captive" in feed_filter or "Thermal" in feed_filter or "Solar" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if "Thermal" in f["zone"] or "Solar" in f["name"] or "CPP" in f["sector"]]
+    elif "Perimeter" in feed_filter or "Substation" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if "Perimeter" in f["zone"] or "Substation" in f["name"]]
+    elif "Township" in feed_filter or "Vidya Mandir" in feed_filter:
         display_feeds = [f for f in cctv_feeds if "Welspun City" in f["zone"]]
-    elif "Fire Station" in feed_filter:
+    elif "Fire Command" in feed_filter or "Emergency" in feed_filter:
         display_feeds = [f for f in cctv_feeds if "Emergency" in f["zone"]]
 
     # Prominent Camera Online Telemetry Banner
     st.markdown(
         """
-        <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 18px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 18px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
-                <span style="color:#BAE6FD; font-size:0.75rem; text-transform:uppercase; font-weight:700; letter-spacing:0.05em;">Surveillance Camera Network Telemetry</span><br>
-                <b style="font-size:1.35rem; color:#FFFFFF;">1,424 <span style="color:#94A3B8; font-size:0.92rem;">UP OUT OF</span> 1,438 <span style="color:#10B981; font-size:1.05rem;">(99.0% OPERATIONAL)</span></b>
+                <span style="color:#BAE6FD; font-size:0.72rem; text-transform:uppercase; font-weight:700; letter-spacing:0.06em;">Welspun City CCTV Surveillance Network Telemetry</span><br>
+                <b style="font-size:1.35rem; color:#FFFFFF;">1,424 <span style="color:#94A3B8; font-size:0.92rem;">ONLINE OUT OF</span> 1,438 <span style="color:#10B981; font-size:1.05rem;">(99.0% OPERATIONAL)</span></b>
             </div>
-            <div style="display:flex; gap:16px; font-size:0.8rem; color:#E2E8F0; flex-wrap:wrap;">
-                <div>🏭 Plant Core: <b style="color:#38BDF8;">812/820</b></div>
-                <div>🚷 Perimeter: <b style="color:#FBBF24;">216/218</b></div>
-                <div>🏡 Township: <b style="color:#34D399;">348/350</b></div>
-                <div>🚒 Fire Hub: <b style="color:#F87171;">48/50</b></div>
-                <div>🔧 Maintenance: <b style="color:#94A3B8;">14</b></div>
+            <div style="display:flex; gap:14px; font-size:0.78rem; color:#E2E8F0; flex-wrap:wrap;">
+                <div>🏭 WCL Pipes: <b style="color:#38BDF8;">410/414</b></div>
+                <div>🔩 WDI Blast Furnace &amp; DI: <b style="color:#60A5FA;">402/406</b></div>
+                <div>🧵 WLL Textiles: <b style="color:#A78BFA;">390/392</b></div>
+                <div>⚡ CPP &amp; Solar: <b style="color:#FBBF24;">124/126</b></div>
+                <div>🏡 Welspun City: <b style="color:#34D399;">348/350</b></div>
+                <div>🚷 Perimeter: <b style="color:#F87171;">216/218</b></div>
+                <div>🚒 Fire Hub: <b style="color:#F472B6;">48/50</b></div>
             </div>
         </div>
         """,
@@ -333,10 +351,10 @@ with tab_alerts:
 
 # ----------------- TAB 5: SPATIAL MAP -----------------
 with tab_map:
-    st.markdown("#### Spatial Defense, Perimeter & Hydrant Topology")
-    st.caption("Visualizing manufacturing plant sectors, restricted perimeter fence, Welspun City residential quarters, and dual fire stations.")
+    st.markdown("#### Welspun City Spatial Defense, Mill Sectors & Hydrant Topology")
+    st.caption("Visualizing 2,500-acre complex: WCL LSAW & Spiral Mills, WDI 500k TPA Blast Furnace & DI Foundry, WLL Home & Spunlace Textiles, 123 MW Captive Thermal Plant & 42 MW Solar Array, Welspun City Township, and Dual Fire Stations.")
     try:
         fig_map = render_anjar_spatial_map()
         st.plotly_chart(fig_map, use_container_width=True)
     except Exception as e:
-        st.info("Interactive topology map is loaded. Sector nodes: Sector 1 (Pipe Mill), Sector 2 (Textiles), Sector 3 (Flooring), Sector 4 (Utility Hub), Welspun City Quarters, Fire Stations Alpha & Bravo.")
+        st.info("Interactive topology map is loaded. Sector nodes: WCL (LSAW & Spiral Pipes), WDI (500k TPA Blast Furnace, Sinter & DI Pipes), WLL (Home & Spunlace Textiles), 123MW CPP & Solar, Welspun City Township, Fire Stations Alpha & Bravo.")
