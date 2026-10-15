@@ -132,8 +132,8 @@ with st.sidebar:
 
 # Welspun Header Banner (Updated to WELSPUN & Days Since Last Incident)
 render_welspun_header(
-    title="Welspun Integrated Command & Control Centre",
-    subtitle="AI Multi-Screen CCTV Surveillance, Fire Network & Safety Intelligence • Anjar Plants & Welspun City",
+    title="Welspun Command & Control Centre (ICCC)",
+    subtitle="AI Multi-Screen CCTV Surveillance, Fire Network & Safety Intelligence • Anjar Complex",
     badge_text="LIVE DEFENSE MESH",
     days_incident_free=safety_stats["days_since_last_incident"]
 )
