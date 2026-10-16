@@ -14,6 +14,8 @@ from components.fire_command import render_hydrant_gauge, render_fire_network_pa
 from components.incident_panel import render_incident_panel
 from components.spatial_map import render_anjar_spatial_map
 from components.sensor_health import render_sensor_health_panel
+from components.logistics_view import render_logistics_screen
+from components.bus_transit_view import render_bus_transit_screen
 from data.surveillance_data import (
     get_safety_incident_stats,
     get_sensor_health_telemetry,
@@ -90,7 +92,11 @@ with st.sidebar:
     feed_filter = st.selectbox(
         "Screen Sector Filter",
         [
-            "🖥️ All 8 Active Screens (Master Wall)",
+            "🖥️ All 12 Active Screens (Master Wall)",
+            "🚛 Gate 1 Unmanned Automated Weighbridge (CAM-WB01)",
+            "📹 Heavy Logistics Inbound Dashcam (CAM-DC01)",
+            "🚌 Employee Transit Terminal Bays (CAM-BUS01)",
+            "🚍 Commuter Bus Highway Dashcam (CAM-BUS02)",
             "🏭 WCL Line Pipe Mills: LSAW & Spiral (CAM-06)",
             "🔩 WDI 500k TPA Blast Furnace & DI Pipe Plant (CAM-01)",
             "🧵 WLL Home & Advanced Spunlace Textiles (CAM-07)",
@@ -209,8 +215,10 @@ st.markdown(
 )
 
 # ----------------- TABS WORKSPACE -----------------
-tab_video, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
+tab_video, tab_logistics, tab_buses, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
     "🎥 CCTV Multi-Screen Video Wall",
+    "🚛 Logistics & Unmanned Weighbridge (SAP S/4HANA)",
+    "🚌 Employee Transit & Commuter Bus Fleet",
     "🔥 Smoke & Fire Sensor Health",
     "🚒 Networked Fire Station Hub",
     "⚠️ Live Alarms & Security Log",
@@ -221,7 +229,15 @@ tab_video, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
 with tab_video:
     # Filter feeds by sector if user selected a subset
     display_feeds = cctv_feeds
-    if "CAM-06" in feed_filter or "WCL" in feed_filter or "LSAW" in feed_filter:
+    if "CAM-WB01" in feed_filter or "Weighbridge" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-WB01"]
+    elif "CAM-DC01" in feed_filter or "Truck Dashcam" in feed_filter or "Heavy Logistics" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-DC01"]
+    elif "CAM-BUS01" in feed_filter or "Transit Terminal" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-BUS01"]
+    elif "CAM-BUS02" in feed_filter or "Bus Dashcam" in feed_filter:
+        display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-BUS02"]
+    elif "CAM-06" in feed_filter or "WCL" in feed_filter or "LSAW" in feed_filter:
         display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-06"]
     elif "CAM-01" in feed_filter or "WDI" in feed_filter or "Blast Furnace" in feed_filter:
         display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-01"]
@@ -268,11 +284,19 @@ with tab_video:
             with cols[c_idx]:
                 render_cctv_video_card(feed, stream_format=stream_fmt)
 
-# ----------------- TAB 2: SENSOR HEALTH -----------------
+# ----------------- TAB 2: LOGISTICS & UNMANNED WEIGHBRIDGE -----------------
+with tab_logistics:
+    render_logistics_screen(stream_format=stream_fmt)
+
+# ----------------- TAB 3: EMPLOYEE TRANSIT BUSES -----------------
+with tab_buses:
+    render_bus_transit_screen(stream_format=stream_fmt)
+
+# ----------------- TAB 4: SENSOR HEALTH -----------------
 with tab_sensors:
     render_sensor_health_panel(sensor_health)
 
-# ----------------- TAB 3: FIRE NETWORK -----------------
+# ----------------- TAB 5: FIRE NETWORK -----------------
 with tab_fire:
     col_f_left, col_f_right = st.columns([1.8, 1.2])
     with col_f_left:
@@ -325,7 +349,7 @@ with tab_fire:
             unsafe_allow_html=True
         )
 
-# ----------------- TAB 4: ALARMS & INCIDENTS -----------------
+# ----------------- TAB 6: ALARMS & INCIDENTS -----------------
 with tab_alerts:
     col_a_feed, col_a_sim = st.columns([2.2, 1])
     with col_a_feed:
@@ -352,7 +376,7 @@ with tab_alerts:
             st.success("Perimeter status updated to SECURE.")
             st.rerun()
 
-# ----------------- TAB 5: SPATIAL MAP -----------------
+# ----------------- TAB 7: SPATIAL MAP -----------------
 with tab_map:
     st.markdown("#### Welspun City Spatial Defense, Mill Sectors & Hydrant Topology")
     st.caption("Visualizing 2,500-acre complex: WCL LSAW & Spiral Mills, WDI 500k TPA Blast Furnace & DI Foundry, WLL Home & Spunlace Textiles, 123 MW Captive Thermal Plant & 42 MW Solar Array, Welspun City Township, and Dual Fire Stations.")
