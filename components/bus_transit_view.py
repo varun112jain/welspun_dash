@@ -21,43 +21,32 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
     roster = get_commuter_bus_roster()
     schedule = get_shift_schedule()
 
-    # 1. Top KPI Row
-    st.html(
-        f"""
-        <div class="kpi-grid" style="margin-bottom:1rem;">
-            <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-                <div class="surv-kpi-label">Active Bus Fleet</div>
-                <div class="surv-kpi-val" style="color:#005BAA;">{kpis['active_fleet']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpis['active_fleet']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">Commuters Today</div>
-                <div class="surv-kpi-val" style="color:#059669;">{kpis['commuters_today']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpis['commuters_today']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #00A6E6;">
-                <div class="surv-kpi-label">On-Time Performance</div>
-                <div class="surv-kpi-val" style="color:#0284C7;">{kpis['on_time_departure']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpis['on_time_departure']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">Driver Alertness (DSM)</div>
-                <div class="surv-kpi-val" style="color:#059669;">{kpis['driver_alertness']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpis['driver_alertness']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-                <div class="surv-kpi-label">Average Seat Occupancy</div>
-                <div class="surv-kpi-val" style="color:#005BAA;">{kpis['seat_occupancy']['value']}</div>
-                <div class="surv-kpi-sub">{kpis['seat_occupancy']['sub']}</div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">Transit Safety Compliance</div>
-                <div class="surv-kpi-val" style="color:#059669;">{kpis['safety_index']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpis['safety_index']['sub']}</b></div>
-            </div>
-        </div>
-        """
-    )
+    # 1. Top KPI Row (Native Streamlit Metrics)
+    b1, b2, b3, b4, b5, b6 = st.columns(6)
+    with b1:
+        with st.container(border=True):
+            st.caption("FLEET SIZE")
+            st.metric("Active Buses", kpis['active_fleet']['value'], kpis['active_fleet']['sub'])
+    with b2:
+        with st.container(border=True):
+            st.caption("RIDERSHIP")
+            st.metric("Commuters", kpis['commuters_today']['value'], kpis['commuters_today']['sub'])
+    with b3:
+        with st.container(border=True):
+            st.caption("SCHEDULE")
+            st.metric("On-Time Dep.", kpis['on_time_departure']['value'], kpis['on_time_departure']['sub'])
+    with b4:
+        with st.container(border=True):
+            st.caption("DSM SAFETY")
+            st.metric("Alertness", kpis['driver_alertness']['value'], kpis['driver_alertness']['sub'])
+    with b5:
+        with st.container(border=True):
+            st.caption("OCCUPANCY")
+            st.metric("Avg Seat Occ.", kpis['seat_occupancy']['value'], kpis['seat_occupancy']['sub'])
+    with b6:
+        with st.container(border=True):
+            st.caption("COMPLIANCE")
+            st.metric("Safety Index", kpis['safety_index']['value'], kpis['safety_index']['sub'])
 
     # 2. Main Layout: Feeds Left, Control & Shift Telemetry Right
     col_feeds_left, col_ctrl_right = st.columns([1.6, 1.4])

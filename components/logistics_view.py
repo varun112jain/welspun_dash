@@ -20,43 +20,32 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
     active_state = get_current_weighment_state()
     truck_log = get_logistics_truck_log()
 
-    # 1. Top KPI Row
-    st.html(
-        f"""
-        <div class="kpi-grid" style="margin-bottom:1rem;">
-            <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-                <div class="surv-kpi-label">Truck Traffic Today</div>
-                <div class="surv-kpi-val" style="color:#005BAA;">{kpi_data['trucks_today']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpi_data['trucks_today']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">Weighbridge Automation</div>
-                <div class="surv-kpi-val" style="color:#059669;">{kpi_data['unmanned_pct']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpi_data['unmanned_pct']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #00A6E6;">
-                <div class="surv-kpi-label">Avg Gate Turnaround</div>
-                <div class="surv-kpi-val" style="color:#0284C7;">{kpi_data['avg_turnaround_min']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpi_data['avg_turnaround_min']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">SAP S/4HANA Sync</div>
-                <div class="surv-kpi-val" style="color:#059669;">{kpi_data['sap_sync_health']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpi_data['sap_sync_health']['sub']}</b></div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-                <div class="surv-kpi-label">Active Scales</div>
-                <div class="surv-kpi-val" style="color:#005BAA;">{kpi_data['active_weighbridges']['value']}</div>
-                <div class="surv-kpi-sub">{kpi_data['active_weighbridges']['sub']}</div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">Tolerance / Compliance</div>
-                <div class="surv-kpi-val" style="color:#059669;">{kpi_data['weight_tolerance']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpi_data['weight_tolerance']['sub']}</b></div>
-            </div>
-        </div>
-        """
-    )
+    # 1. Top KPI Row (Native Streamlit Metrics)
+    k1, k2, k3, k4, k5, k6 = st.columns(6)
+    with k1:
+        with st.container(border=True):
+            st.caption("TRUCK TRAFFIC")
+            st.metric("Trucks Today", kpi_data['trucks_today']['value'], kpi_data['trucks_today']['sub'])
+    with k2:
+        with st.container(border=True):
+            st.caption("AUTOMATION")
+            st.metric("Unmanned %", kpi_data['unmanned_pct']['value'], kpi_data['unmanned_pct']['sub'])
+    with k3:
+        with st.container(border=True):
+            st.caption("TURNAROUND")
+            st.metric("Avg Gate Time", kpi_data['avg_turnaround_min']['value'], kpi_data['avg_turnaround_min']['sub'])
+    with k4:
+        with st.container(border=True):
+            st.caption("SAP S/4HANA")
+            st.metric("Sync Status", kpi_data['sap_sync_health']['value'], kpi_data['sap_sync_health']['sub'])
+    with k5:
+        with st.container(border=True):
+            st.caption("SCALES")
+            st.metric("Active Scales", kpi_data['active_weighbridges']['value'], kpi_data['active_weighbridges']['sub'])
+    with k6:
+        with st.container(border=True):
+            st.caption("COMPLIANCE")
+            st.metric("Tolerance", kpi_data['weight_tolerance']['value'], kpi_data['weight_tolerance']['sub'])
 
     # 2. Main Layout: Left 2 Columns for Live Feeds, Right Column for Unmanned Automation & SAP Sync
     col_video_left, col_tele_right = st.columns([1.6, 1.4])
