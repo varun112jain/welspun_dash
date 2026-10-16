@@ -1,7 +1,7 @@
 """
-Executive Summary & Boardroom Intelligence Screen Component for Welspun City, Anjar
-Delivers an interactive high-level briefing featuring multi-feed strategic video reels,
-Plotly analytics graphics, autonomous AI mitigation metrics, and leadership directives.
+Executive Operations Summary & Analytical Intelligence Component for Welspun City, Anjar
+Delivers an interactive operational briefing featuring multi-feed strategic video reels,
+Plotly analytics graphics, autonomous AI mitigation metrics, and energy balance.
 """
 import os
 import streamlit as st
@@ -13,8 +13,7 @@ from data.executive_data import (
     get_executive_video_showcases,
     get_hourly_production_series,
     get_ai_prevention_breakdown,
-    get_energy_generation_mix,
-    get_strategic_milestones
+    get_energy_generation_mix
 )
 
 def render_production_velocity_chart(prod_data: dict) -> go.Figure:
@@ -223,21 +222,20 @@ def render_executive_video_item(video_info: dict, stream_format: str = "Live Str
         st.info(f"**Strategic Impact:** {video_info['strategic_impact']}", icon="🎯")
 
 def render_executive_summary_screen(stream_format: str = "Live Stream"):
-    """Renders the comprehensive Executive Summary & Boardroom Intelligence Screen."""
+    """Renders the comprehensive Executive Operations & Plant Intelligence Screen."""
     kpis = get_executive_kpis()
     videos = get_executive_video_showcases()
     prod_data = get_hourly_production_series()
     ai_data = get_ai_prevention_breakdown()
     energy_data = get_energy_generation_mix()
-    milestones = get_strategic_milestones()
 
-    # 1. Executive Boardroom Banner
+    # 1. Executive Operations Banner
     with st.container(border=True):
         b1, b2, b3 = st.columns([2.5, 1, 1])
         with b1:
-            st.caption("WELSPUN GROUP • LEADERSHIP COMMAND BRIEFING")
+            st.caption("WELSPUN GROUP • INTEGRATED PLANT OPERATIONS SUMMARY")
             st.markdown("### Executive Operations, Safety & Production Intelligence")
-            st.caption("Consolidated 24/7 strategic overview across the 2,500-Acre Anjar Mega Manufacturing Hub.")
+            st.caption("Consolidated 24/7 operational telemetry overview across the 2,500-Acre Anjar Mega Manufacturing Hub.")
         with b2:
             st.metric("Overall Plant OEE", "94.8%", "World Class")
         with b3:
@@ -319,28 +317,3 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
     st.markdown("##### ⚡ 24-Hour Captive Clean Energy Generation vs Complex Demand")
     fig_energy = render_energy_mix_chart(energy_data)
     st.plotly_chart(fig_energy, use_container_width=True)
-
-    st.markdown("---")
-
-    # 5. Strategic Milestones & Leadership Directives
-    st.markdown("### 🧭 Strategic Milestones & Boardroom Directives")
-    st.caption("High-impact capacity expansions, ESG sustainability initiatives, and plant modernization deliverables.")
-
-    milestone_cols = st.columns(2)
-    for idx, item in enumerate(milestones):
-        col = milestone_cols[idx % 2]
-        with col:
-            with st.container(border=True):
-                m_h1, m_h2 = st.columns([2, 1.2])
-                with m_h1:
-                    st.caption(item['domain'].upper())
-                    st.markdown(f"**{item['title']}**")
-                with m_h2:
-                    if item["priority"] == "HIGH":
-                        st.info(item['status'])
-                    elif item["priority"] == "ACTION REQUIRED":
-                        st.warning(item['status'])
-                    else:
-                        st.success(item['status'])
-                st.markdown(f"{item['impact']}")
-                st.caption(f"Lead: **{item['lead']}** | Target: **{item['deadline']}**")

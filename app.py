@@ -214,7 +214,7 @@ st.html(
 
 # ----------------- TABS WORKSPACE -----------------
 tab_exec, tab_video, tab_logistics, tab_buses, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
-    "📊 Executive Summary & Boardroom Intelligence",
+    "📊 Executive Operational Summary",
     "🎥 CCTV Multi-Screen Video Wall",
     "🚛 Logistics & Unmanned Weighbridge (SAP S/4HANA)",
     "🚌 Employee Transit & Commuter Bus Fleet",
