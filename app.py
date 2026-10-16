@@ -382,6 +382,5 @@ with tab_map:
     try:
         fig_map = render_anjar_spatial_map()
         st.plotly_chart(fig_map, use_container_width=True)
+    except Exception as e:
         st.info("Interactive topology map is loaded. Sector nodes: WCL (LSAW & Spiral Pipes), WDI (500k TPA Blast Furnace, Sinter & DI Pipes), WLL (Home & Spunlace Textiles), 123MW CPP & Solar, Welspun City Township, Fire Stations Alpha & Bravo.")
-
-# Welspun Anjar ICCC Dashboard loaded successfully
