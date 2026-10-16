@@ -20,7 +20,17 @@ import components.logistics_view
 import components.bus_transit_view
 import components.executive_summary
 
+# Data modules
+import data.surveillance_data
+import data.executive_data
+import data.logistics_data
+import data.bus_transit_data
+
 # Force reload modules on every run to eliminate stale cache
+importlib.reload(data.executive_data)
+importlib.reload(data.surveillance_data)
+importlib.reload(data.logistics_data)
+importlib.reload(data.bus_transit_data)
 importlib.reload(components.executive_summary)
 importlib.reload(components.logistics_view)
 importlib.reload(components.bus_transit_view)
