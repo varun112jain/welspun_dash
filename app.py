@@ -6,7 +6,30 @@ Perimeter Crossing Detection, Smoke/Fire Sensor Health, and Incident Milestone C
 import os
 import streamlit as st
 
+import importlib
+
 # Local modules
+import styles.welspun_theme
+import components.header
+import components.cctv_view
+import components.fire_command
+import components.incident_panel
+import components.spatial_map
+import components.sensor_health
+import components.logistics_view
+import components.bus_transit_view
+import components.executive_summary
+
+# Force reload modules on every run to eliminate stale cache
+importlib.reload(components.executive_summary)
+importlib.reload(components.logistics_view)
+importlib.reload(components.bus_transit_view)
+importlib.reload(components.fire_command)
+importlib.reload(components.sensor_health)
+importlib.reload(components.incident_panel)
+importlib.reload(components.cctv_view)
+importlib.reload(components.spatial_map)
+
 from styles.welspun_theme import load_css, WELSPUN_COLORS
 from components.header import render_welspun_header
 from components.cctv_view import render_cctv_video_card

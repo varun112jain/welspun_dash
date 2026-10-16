@@ -211,15 +211,13 @@ def render_executive_video_item(video_info: dict, stream_format: str = "Live Str
         if not rendered:
             st.error(f"Feed offline: {video_info['title']}")
 
-        # Strategic Metric & Business Impact
+        # Operational Metric & Real-Time Telemetry
         m_left, m_right = st.columns([1.5, 1.5])
         with m_left:
             st.metric(label=video_info['kpi_label'], value=video_info['kpi_value'])
         with m_right:
             st.caption("TELEMETRY")
             st.markdown(f"*{video_info['telemetry']}*")
-        
-        st.info(f"**Strategic Impact:** {video_info['strategic_impact']}", icon="🎯")
 
 def render_executive_summary_screen(stream_format: str = "Live Stream"):
     """Renders the comprehensive Executive Operations & Plant Intelligence Screen."""
@@ -279,8 +277,8 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
         """
     )
 
-    # 3. Strategic Video Showcase Reel (2x2 Grid with Video & Telemetry Overlays)
-    st.markdown("### 🎥 Strategic Video Intelligence Showcase")
+    # 3. Operational Video Showcase Reel (2x2 Grid with Video & Telemetry Overlays)
+    st.markdown("### 🎥 Key Plant Operational Video Telemetry")
     st.caption("Live video monitoring covering Heavy Metallurgy, Blast Furnace Tapping, Unmanned SAP Logistics, and 220kV Critical Perimeter.")
 
     row1_c1, row1_c2 = st.columns(2)
