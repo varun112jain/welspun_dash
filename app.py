@@ -16,6 +16,7 @@ from components.spatial_map import render_anjar_spatial_map
 from components.sensor_health import render_sensor_health_panel
 from components.logistics_view import render_logistics_screen
 from components.bus_transit_view import render_bus_transit_screen
+from components.executive_summary import render_executive_summary_screen
 from data.surveillance_data import (
     get_safety_incident_stats,
     get_sensor_health_telemetry,
@@ -212,7 +213,8 @@ st.html(
 )
 
 # ----------------- TABS WORKSPACE -----------------
-tab_video, tab_logistics, tab_buses, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
+tab_exec, tab_video, tab_logistics, tab_buses, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
+    "📊 Executive Summary & Boardroom Intelligence",
     "🎥 CCTV Multi-Screen Video Wall",
     "🚛 Logistics & Unmanned Weighbridge (SAP S/4HANA)",
     "🚌 Employee Transit & Commuter Bus Fleet",
@@ -221,6 +223,10 @@ tab_video, tab_logistics, tab_buses, tab_sensors, tab_fire, tab_alerts, tab_map 
     "⚠️ Live Alarms & Security Log",
     "🗺️ Welspun City Spatial Topology Map"
 ])
+
+# ----------------- TAB 0: EXECUTIVE SUMMARY -----------------
+with tab_exec:
+    render_executive_summary_screen(stream_format=stream_fmt)
 
 # ----------------- TAB 1: CCTV FEEDS -----------------
 with tab_video:
