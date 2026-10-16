@@ -11,71 +11,9 @@ from styles.welspun_theme import WELSPUN_COLORS
 from data.executive_data import (
     get_executive_kpis,
     get_executive_video_showcases,
-    get_hourly_production_series,
     get_ai_prevention_breakdown,
     get_energy_generation_mix
 )
-
-def render_production_velocity_chart(prod_data: dict) -> go.Figure:
-    """Builds an executive-grade production velocity chart with hourly breakdown and target line."""
-    fig = go.Figure()
-    
-    # Division bars
-    fig.add_trace(go.Bar(
-        x=prod_data["hours"],
-        y=prod_data["wcl_pipes"],
-        name="WCL LSAW/Spiral Pipes",
-        marker_color="#005BAA"
-    ))
-    fig.add_trace(go.Bar(
-        x=prod_data["hours"],
-        y=prod_data["wdi_iron"],
-        name="WDI Blast Furnace & DI",
-        marker_color="#00A6E6"
-    ))
-    fig.add_trace(go.Bar(
-        x=prod_data["hours"],
-        y=prod_data["wll_textiles"],
-        name="WLL Spunlace Textiles",
-        marker_color="#10B981"
-    ))
-    
-    # Target benchmark line
-    fig.add_trace(go.Scatter(
-        x=prod_data["hours"],
-        y=prod_data["target_hourly"],
-        name="Complex Target (650 MT/h)",
-        mode="lines",
-        line=dict(color="#EF4444", width=2.5, dash="dash")
-    ))
-
-    fig.update_layout(
-        barmode="stack",
-        height=320,
-        margin=dict(l=20, r=20, t=30, b=20),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1,
-            font=dict(size=11)
-        ),
-        plot_bgcolor="#FFFFFF",
-        paper_bgcolor="#FFFFFF",
-        xaxis=dict(
-            title=dict(text="Operating Hour", font=dict(size=11, color="#64748B")),
-            showgrid=False,
-            color="#334155"
-        ),
-        yaxis=dict(
-            title=dict(text="Output (Metric Tons)", font=dict(size=11, color="#64748B")),
-            gridcolor="#F1F5F9",
-            color="#334155"
-        ),
-        hovermode="x unified"
-    )
-    return fig
 
 def render_ai_prevention_donut(ai_data: dict) -> go.Figure:
     """Builds a high-impact donut chart displaying AI autonomous threat mitigations."""
@@ -223,7 +161,6 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
     """Renders the comprehensive Executive Operations & Plant Intelligence Screen."""
     kpis = get_executive_kpis()
     videos = get_executive_video_showcases()
-    prod_data = get_hourly_production_series()
     ai_data = get_ai_prevention_breakdown()
     energy_data = get_energy_generation_mix()
 
@@ -232,10 +169,10 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
         b1, b2, b3 = st.columns([2.5, 1, 1])
         with b1:
             st.caption("WELSPUN GROUP • INTEGRATED PLANT OPERATIONS SUMMARY")
-            st.markdown("### Executive Operations, Safety & Production Intelligence")
-            st.caption("Consolidated 24/7 operational telemetry overview across the 2,500-Acre Anjar Mega Manufacturing Hub.")
+            st.markdown("### Executive Operations, Safety & Surveillance Intelligence")
+            st.caption("Consolidated 24/7 operational safety, surveillance, and security telemetry across the 2,500-Acre Anjar Mega Complex.")
         with b2:
-            st.metric("Overall Plant OEE", "94.8%", "World Class")
+            st.metric("CCTV Camera Uptime", "99.0%", "1,424 Feeds Online")
         with b3:
             st.metric("Workforce on Duty", "14,820", "Active on Shift")
 
@@ -244,9 +181,9 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
         f"""
         <div class="kpi-grid" style="margin-bottom:1.2rem;">
             <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-                <div class="surv-kpi-label">{kpis['complex_output']['title']}</div>
-                <div class="surv-kpi-val" style="color:#005BAA;">{kpis['complex_output']['value']}</div>
-                <div class="surv-kpi-sub"><b>{kpis['complex_output']['delta']}</b> • {kpis['complex_output']['target']}</div>
+                <div class="surv-kpi-label">{kpis['cctv_network_health']['title']}</div>
+                <div class="surv-kpi-val" style="color:#005BAA;">{kpis['cctv_network_health']['value']}</div>
+                <div class="surv-kpi-sub"><b>{kpis['cctv_network_health']['target']}</b> • {kpis['cctv_network_health']['delta']}</div>
             </div>
             <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
                 <div class="surv-kpi-label">{kpis['safe_man_hours']['title']}</div>
@@ -296,22 +233,17 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
     st.markdown("---")
 
     # 4. Interactive Analytical Graphics & Visualizations (Plotly)
-    st.markdown("### 📈 Operational Velocity, Safety Intelligence & Energy Mix")
-    st.caption("Real-time production tracking, autonomous safety interventions, and captive energy independence.")
+    st.markdown("### 📈 Safety Intelligence, Threat Mitigation & Clean Energy Balance")
+    st.caption("Real-time vision AI safety interventions, automated perimeter defense, and captive clean energy distribution.")
 
-    col_g1, col_g2 = st.columns([1.5, 1.1])
+    col_g1, col_g2 = st.columns(2)
 
     with col_g1:
-        st.markdown("##### 🏭 Hourly Production Velocity vs Plan (All Manufacturing Mills)")
-        fig_prod = render_production_velocity_chart(prod_data)
-        st.plotly_chart(fig_prod, use_container_width=True)
-
-    with col_g2:
         st.markdown("##### 🛡️ Autonomous AI Safety & Anomaly Prevention Breakdown")
         fig_ai = render_ai_prevention_donut(ai_data)
         st.plotly_chart(fig_ai, use_container_width=True)
 
-    # Clean Energy Balance Chart
-    st.markdown("##### ⚡ 24-Hour Captive Clean Energy Generation vs Complex Demand")
-    fig_energy = render_energy_mix_chart(energy_data)
-    st.plotly_chart(fig_energy, use_container_width=True)
+    with col_g2:
+        st.markdown("##### ⚡ 24-Hour Captive Clean Energy Generation vs Complex Demand")
+        fig_energy = render_energy_mix_chart(energy_data)
+        st.plotly_chart(fig_energy, use_container_width=True)

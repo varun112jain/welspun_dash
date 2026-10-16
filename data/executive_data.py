@@ -6,15 +6,15 @@ Logistics Automation, Workforce Transit, Plant Safety, and Sustainability.
 from typing import Dict, List, Any
 
 def get_executive_kpis() -> Dict[str, Dict[str, Any]]:
-    """Returns top-level executive KPIs with delta trends and status."""
+    """Returns top-level executive operational KPIs with delta trends and status."""
     return {
-        "complex_output": {
-            "title": "Daily Finished Production",
-            "value": "18,450 MT",
-            "target": "Target: 18,000 MT",
-            "delta": "+2.5% vs Plan",
+        "cctv_network_health": {
+            "title": "CCTV Surveillance Mesh",
+            "value": "1,424 / 1,438",
+            "target": "99.0% Operational",
+            "delta": "14 Maint Loops",
             "status": "optimal",
-            "sub": "WCL Pipes • WDI Blast Furnace • WLL Spunlace"
+            "sub": "2,500-Acre Integrated Fiber & Optical Grid"
         },
         "safe_man_hours": {
             "title": "Safety & LTI Streak",
@@ -59,7 +59,7 @@ def get_executive_kpis() -> Dict[str, Dict[str, Any]]:
     }
 
 def get_executive_video_showcases() -> List[Dict[str, Any]]:
-    """Returns 4 premier video streams highlighting key strategic operational zones."""
+    """Returns 4 premier video streams highlighting key operational zones."""
     return [
         {
             "id": "EXEC-01",
@@ -70,10 +70,9 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "gif": "assets/video_wcl_pipe_mill.gif",
             "image": "assets/cctv_wcl_pipe_mill.jpg",
             "status": "● 100% OPERATIONAL",
-            "kpi_label": "Mill Run Rate",
-            "kpi_value": "42.5 Pipes / Hr",
-            "telemetry": "Grade X70 API 5L High-Pressure Pipeline Coils",
-            "strategic_impact": "Supplying critical national energy gas grid infrastructure."
+            "kpi_label": "Line Visual Status",
+            "kpi_value": "MONITORING ACTIVE",
+            "telemetry": "Grade X70 API 5L High-Pressure Optical Safety Feed"
         },
         {
             "id": "EXEC-02",
@@ -84,10 +83,9 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "gif": "assets/video_wdi_blast_furnace.gif",
             "image": "assets/cctv_blast_furnace.jpg",
             "status": "● NOMINAL TAPPING",
-            "kpi_label": "Hot Metal Temp",
-            "kpi_value": "1,485°C (Stable)",
-            "telemetry": "Blast Volume 1,820 Nm³/min • Tuyere Pressure 2.4 Bar",
-            "strategic_impact": "Direct feed to Ductile Iron (DI) water transmission pipes."
+            "kpi_label": "Furnace Zone Visual",
+            "kpi_value": "TAP RUNNER ACTIVE",
+            "telemetry": "Optical Flare & Runner Detection • Area Clear"
         },
         {
             "id": "EXEC-03",
@@ -100,8 +98,7 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "status": "● ZERO SCALEMASTER",
             "kpi_label": "Cycle Clearance",
             "kpi_value": "142 Sec / Truck",
-            "telemetry": "ANPR Plate Read • IR Deck Positioning • Auto-MIGO",
-            "strategic_impact": "Zero gate congestion with multi-loadcell tamper prevention."
+            "telemetry": "ANPR Plate Read • IR Deck Positioning • Auto-MIGO"
         },
         {
             "id": "EXEC-04",
@@ -114,28 +111,9 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "status": "⚠️ PATROL INTERCEPT",
             "kpi_label": "Threat Level",
             "kpi_value": "CONTAINED",
-            "telemetry": "Thermal Optical AI • Target Tracking • Patrol Car #02 On-Scene",
-            "strategic_impact": "Guarding the 220kV primary power feed to all manufacturing mills."
+            "telemetry": "Thermal Optical AI • Target Tracking • Patrol Car #02 On-Scene"
         }
     ]
-
-def get_hourly_production_series() -> Dict[str, Any]:
-    """Hourly production data across mills for Plotly charting."""
-    hours = [f"{h:02d}:00" for h in range(6, 23)]
-    wcl_pipes = [240, 260, 280, 275, 290, 285, 270, 295, 305, 310, 290, 285, 300, 315, 320, 310, 295]
-    wdi_iron = [220, 235, 250, 245, 260, 255, 250, 265, 270, 275, 265, 260, 270, 280, 285, 275, 260]
-    wll_textiles = [130, 140, 150, 145, 155, 150, 140, 160, 165, 170, 160, 155, 165, 170, 175, 165, 155]
-    total_hourly = [a + b + c for a, b, c in zip(wcl_pipes, wdi_iron, wll_textiles)]
-    target_hourly = [650] * len(hours)
-    
-    return {
-        "hours": hours,
-        "wcl_pipes": wcl_pipes,
-        "wdi_iron": wdi_iron,
-        "wll_textiles": wll_textiles,
-        "total_hourly": total_hourly,
-        "target_hourly": target_hourly
-    }
 
 def get_ai_prevention_breakdown() -> Dict[str, Any]:
     """Breakdown of autonomous AI security and safety preventions today."""
