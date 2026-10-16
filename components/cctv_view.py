@@ -12,7 +12,7 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
     
     with st.container(border=True):
         # 1. Camera Header HUD with standardized height & single-line ellipsis
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#020617; color:#E2E8F0; padding:6px 10px; border-radius:6px; min-height:42px; display:flex; justify-content:space-between; align-items:center; font-family:monospace; font-size:0.83rem; border:1px solid #1E293B; margin-bottom:8px; box-sizing:border-box;">
                 <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:68%;">
@@ -24,8 +24,7 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
                     <span style="color:#94A3B8; font-size:0.75rem;">{feed["fps"]} FPS</span>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
         
         # 2. Continuous Video Feed Display
@@ -59,7 +58,7 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
         # 3. Camera Metadata & AI Detections Footer (standardized min-height for uniform tile alignment)
         ai_tags_html = " ".join([f"<span style='background:#1E293B; color:#38BDF8; padding:2px 7px; border-radius:4px; font-size:0.72rem; border:1px solid #334155; white-space:nowrap;'>{feat}</span>" for feat in feed.get("ai_features", [])[:2]])
         
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#0F172A; border-radius:6px; padding:10px 12px; margin-top:8px; border:1px solid #1E293B; min-height:120px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
                 <div>
@@ -73,8 +72,7 @@ def render_cctv_video_card(feed: dict, stream_format: str = "Live Stream"):
                     <b>AI Intel:</b> {feed['ai_summary']}
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
 # Backward-compatibility alias

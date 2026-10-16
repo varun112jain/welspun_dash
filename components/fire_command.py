@@ -52,7 +52,7 @@ def render_fire_network_panel(fire_data: dict):
     stations = fire_data.get("stations", [])
     if len(stations) >= 2:
         with col_st1:
-            st.markdown(
+            st.html(
                 f"""
                 <div class="fire-panel" style="border-top: 3px solid #005BAA;">
                     <div class="fire-panel-header">
@@ -65,11 +65,10 @@ def render_fire_network_panel(fire_data: dict):
                         <b>Proximity to Plant Core:</b> {stations[0]['distance_to_core']}
                     </div>
                 </div>
-                """,
-                unsafe_allow_html=True
+                """
             )
         with col_st2:
-            st.markdown(
+            st.html(
                 f"""
                 <div class="fire-panel" style="border-top: 3px solid #3071A9;">
                     <div class="fire-panel-header">
@@ -82,8 +81,7 @@ def render_fire_network_panel(fire_data: dict):
                         <b>Proximity to City Centre:</b> {stations[1]['distance_to_core']}
                     </div>
                 </div>
-                """,
-                unsafe_allow_html=True
+                """
             )
             
     # Fleet Table & Dispatch
@@ -95,7 +93,7 @@ def render_fire_network_panel(fire_data: dict):
         chip_class = "dispatched" if is_dispatched else ""
         status_badge = f"<span style='color:#EF4444; font-weight:bold;'>⚡ {tender['status']}</span>" if is_dispatched else f"<span style='color:#10B981; font-weight:bold;'>✓ {tender['status']}</span>"
         
-        st.markdown(
+        st.html(
             f"""
             <div class="tender-chip {chip_class}">
                 <div>
@@ -107,6 +105,5 @@ def render_fire_network_panel(fire_data: dict):
                     {status_badge}
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )

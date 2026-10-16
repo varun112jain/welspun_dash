@@ -56,19 +56,18 @@ def render_sensor_health_panel(sensor_data: dict):
                 
         if fig_g is None:
             # Fallback high-impact metric tile
-            st.markdown(
+            st.html(
                 f"""
                 <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-top:10px;">
                     <div style="font-size:0.8rem; color:#475569; text-transform:uppercase; font-weight:700;">Sensor Network Health</div>
                     <div style="font-size:2.4rem; font-weight:800; color:#10B981; margin:4px 0;">{summary['overall_health_pct']:.1f}%</div>
                     <div style="font-size:0.8rem; color:#64748B;">Target: &gt; 98.0% Operational</div>
                 </div>
-                """,
-                unsafe_allow_html=True
+                """
             )
         
     with c_metrics:
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:14px; margin-top:10px;">
                 <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;">
@@ -90,8 +89,7 @@ def render_sensor_health_panel(sensor_data: dict):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
         
     st.markdown("#### 📡 Detector Categories & Drift Diagnostics")
@@ -99,7 +97,7 @@ def render_sensor_health_panel(sensor_data: dict):
         drift_badge = f"<span style='color:#F59E0B; font-weight:bold;'>⚠️ {cat['drift_warning']} Drift Warnings</span>" if cat['drift_warning'] > 0 else "<span style='color:#10B981;'>✓ Zero Drift</span>"
         cal_badge = f"<span style='color:#EF4444; font-weight:bold;'>🔧 {cat['calibration_due']} Due</span>" if cat['calibration_due'] > 0 else "<span style='color:#10B981;'>✓ Calibrated</span>"
         
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
                 <div>
@@ -111,8 +109,7 @@ def render_sensor_health_panel(sensor_data: dict):
                     <div>{cal_badge}</div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
         
     st.markdown("#### 🏭 Sector-wise Sensor Status")

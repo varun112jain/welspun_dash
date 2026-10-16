@@ -18,7 +18,7 @@ def render_kpi_card(label: str, value: str, delta: str = None, delta_positive: b
         {delta_html}
     </div>
     """
-    st.markdown(html, unsafe_allow_html=True)
+    st.html(html)
 
 def render_notification_banner(message: str, icon: str = "⏳"):
     """Renders an informative Welspun themed notification banner."""
@@ -28,4 +28,4 @@ def render_notification_banner(message: str, icon: str = "⏳"):
         <div>{message}</div>
     </div>
     """
-    st.markdown(html, unsafe_allow_html=True)
+    st.html(html)

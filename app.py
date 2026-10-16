@@ -61,7 +61,7 @@ with st.sidebar:
     else:
         st.markdown(f"<h2 style='color:{WELSPUN_COLORS['primary']};'>WELSPUN</h2>", unsafe_allow_html=True)
     
-    st.markdown(
+    st.html(
         """
         <div style="background:#0F172A; color:#E2E8F0; padding:12px 14px; border-radius:8px; margin-top:8px; border-left:4px solid #00A6E6;">
             <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:#94A3B8;">2,500-Acre Integrated Complex</div>
@@ -75,8 +75,7 @@ with st.sidebar:
                 • <b>Township</b>: Welspun City, Vidya Mandir &amp; Hospital
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
     
     st.markdown("---")
@@ -157,7 +156,7 @@ render_welspun_header(
 
 # Critical Breach Notification Bar if perimeter crossing is active
 if st.session_state["perimeter_alert_active"]:
-    st.markdown(
+    st.html(
         """
         <div style="background:linear-gradient(90deg, #7F1D1D 0%, #B91C1C 50%, #EF4444 100%); color:#FFFFFF; padding:12px 18px; border-radius:8px; margin-bottom:14px; box-shadow:0 4px 14px rgba(239, 68, 68, 0.35); display:flex; justify-content:space-between; align-items:center;">
             <div style="display:flex; align-items:center; gap:12px;">
@@ -171,12 +170,11 @@ if st.session_state["perimeter_alert_active"]:
                 CODE RED • ACTIVE
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 # Top KPI Metric Row (Equal-Height Responsive Grid)
-st.markdown(
+st.html(
     f"""
     <div class="kpi-grid">
         <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
@@ -210,8 +208,7 @@ st.markdown(
             <div class="surv-kpi-sub">{kpi_data["fire_station_readiness"]["sub"]}</div>
         </div>
     </div>
-    """,
-    unsafe_allow_html=True
+    """
 )
 
 # ----------------- TABS WORKSPACE -----------------
@@ -255,7 +252,7 @@ with tab_video:
         display_feeds = [f for f in cctv_feeds if f["id"] == "CAM-03"]
 
     # Prominent Camera Online Telemetry Banner
-    st.markdown(
+    st.html(
         """
         <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 18px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
@@ -272,8 +269,7 @@ with tab_video:
                 <div>🚒 Fire Hub: <b style="color:#F472B6;">48/50</b></div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
     
     # Render Multi-Screen Grid with strict row-by-row baseline alignment
@@ -311,17 +307,16 @@ with tab_fire:
             except Exception:
                 fig_gauge = None
         if fig_gauge is None:
-            st.markdown(
+            st.html(
                 f"""
                 <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:12px;">
                     <div style="font-size:0.8rem; color:#475569; text-transform:uppercase; font-weight:700;">Anjar Ring Hydrant Pressure</div>
                     <div style="font-size:2.4rem; font-weight:800; color:#005BAA; margin:4px 0;">{tele['main_ring_pressure_bar']:.1f} Bar</div>
                     <div style="font-size:0.82rem; color:#10B981; font-weight:600;">✓ Optimal Operating Pressure (Target: 8.0 Bar)</div>
                 </div>
-                """,
-                unsafe_allow_html=True
+                """
             )
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px; font-size:0.85rem; color:#334155;">
                 <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
@@ -345,8 +340,7 @@ with tab_fire:
                     <span>{tele['network_connectivity']}</span>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
 # ----------------- TAB 6: ALARMS & INCIDENTS -----------------
@@ -356,7 +350,7 @@ with tab_alerts:
         render_incident_panel(alarms_data)
     with col_a_sim:
         st.markdown("### ⚡ Security & Safety Command")
-        st.markdown(
+        st.html(
             """
             <div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:14px; margin-bottom:14px;">
                 <div style="color:#991B1B; font-weight:bold; font-size:0.95rem; margin-bottom:4px;">🚨 Active Security Event</div>
@@ -364,8 +358,7 @@ with tab_alerts:
                     Sector 4 West Tripwire breached. Video recording flagged for security review.
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
         if st.button("📢 Broadcast Perimeter Evacuation PA Siren", use_container_width=True, type="secondary"):
             st.warning("Perimeter Horn Sounded at Sector 4 Boundary.")

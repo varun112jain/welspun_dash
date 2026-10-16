@@ -26,7 +26,7 @@ def render_welspun_header(
     logo_b64 = get_welspun_logo_b64()
     logo_html = f'<img src="data:image/png;base64,{logo_b64}" style="height:32px; width:auto; max-width:120px; object-fit:contain; flex-shrink:0;" alt="WELSPUN" />' if logo_b64 else '<span style="font-size:1.25rem; font-weight:800; letter-spacing:0.04em; color:#FFFFFF; flex-shrink:0;">WELSPUN</span>'
 
-    st.markdown(
+    st.html(
         f"""
         <div class="welspun-header-card">
             <div style="display:flex; align-items:center; gap:14px; min-width:0; flex-shrink:1;">
@@ -54,6 +54,5 @@ def render_welspun_header(
                 </div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )

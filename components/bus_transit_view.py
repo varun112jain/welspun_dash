@@ -22,9 +22,9 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
     schedule = get_shift_schedule()
 
     # 1. Top KPI Row
-    st.markdown(
+    st.html(
         f"""
-        <div class="kpi-grid" style="grid-template-columns: repeat(6, 1fr); margin-bottom:1rem;">
+        <div class="kpi-grid" style="margin-bottom:1rem;">
             <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
                 <div class="surv-kpi-label">Active Bus Fleet</div>
                 <div class="surv-kpi-val" style="color:#005BAA;">{kpis['active_fleet']['value']}</div>
@@ -56,8 +56,7 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
                 <div class="surv-kpi-sub"><b>{kpis['safety_index']['sub']}</b></div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
     # 2. Main Layout: Feeds Left, Control & Shift Telemetry Right
@@ -72,7 +71,7 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
             render_cctv_video_card(feeds[1], stream_format=stream_format)
 
         # AI Driver Status Monitoring (DSM) & Cabin Safety Matrix
-        st.markdown(
+        st.html(
             """
             <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 16px; margin-top:4px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -89,8 +88,7 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
                     <div>Speed Governor: <b style="color:#38BDF8;">LOCKED (50 KM/H MAX)</b></div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
     with col_ctrl_right:
@@ -98,7 +96,7 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
         
         # Shift Schedule Breakdown
         for item in schedule:
-            st.markdown(
+            st.html(
                 f"""
                 <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-left:4px solid #005BAA; border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
                     <div>
@@ -111,8 +109,7 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
                         <span style="color:#10B981; font-size:0.75rem; font-weight:600;">✓ {item['on_time_pct']} On-Time</span>
                     </div>
                 </div>
-                """,
-                unsafe_allow_html=True
+                """
             )
 
         st.markdown("#### 🎛️ Employee Shuttle Dispatch & Emergency PA")

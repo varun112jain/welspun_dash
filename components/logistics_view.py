@@ -21,9 +21,9 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
     truck_log = get_logistics_truck_log()
 
     # 1. Top KPI Row
-    st.markdown(
+    st.html(
         f"""
-        <div class="kpi-grid" style="grid-template-columns: repeat(6, 1fr); margin-bottom:1rem;">
+        <div class="kpi-grid" style="margin-bottom:1rem;">
             <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
                 <div class="surv-kpi-label">Truck Traffic Today</div>
                 <div class="surv-kpi-val" style="color:#005BAA;">{kpi_data['trucks_today']['value']}</div>
@@ -55,8 +55,7 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
                 <div class="surv-kpi-sub"><b>{kpi_data['weight_tolerance']['sub']}</b></div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
     # 2. Main Layout: Left 2 Columns for Live Feeds, Right Column for Unmanned Automation & SAP Sync
@@ -71,7 +70,7 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
             render_cctv_video_card(feeds[1], stream_format=stream_format)
 
         # Automated Undercarriage & Container Seal Inspection Telemetry
-        st.markdown(
+        st.html(
             """
             <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 16px; margin-top:4px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -88,8 +87,7 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
                     <div>FASTag RFID ID: <b style="color:#A78BFA;">3416-1FA8-9920-55B1</b></div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
     with col_tele_right:
@@ -100,7 +98,7 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
         tare_wt = active_state["tare_weight_kg"]
         net_wt = active_state["net_weight_kg"]
 
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#020617; border:2px solid #005BAA; border-radius:10px; padding:16px; color:#FFFFFF; margin-bottom:12px; box-shadow:0 4px 18px rgba(0, 91, 170, 0.25);">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1E293B; padding-bottom:8px; margin-bottom:12px;">
@@ -146,13 +144,12 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
         # 3. SAP S/4HANA ERP Seamless Integration Module
         st.markdown("#### 🔗 Seamless SAP S/4HANA ERP Integration")
-        st.markdown(
+        st.html(
             f"""
             <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:4px solid #005BAA; border-radius:10px; padding:14px 16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -184,8 +181,7 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
         # Interactive Simulation Trigger

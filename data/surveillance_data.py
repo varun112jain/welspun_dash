@@ -87,7 +87,7 @@ def get_surveillance_kpis():
         "perimeter_crossings": {"value": "1 Breach", "sub": "220kV Yard Perimeter", "status": "critical", "label": "Perimeter Crossing"},
         "active_fire_alarms": {"value": "1 Alert", "sub": "123MW CPP Steam Header", "status": "critical", "label": "Active Fire & Alarms"},
         "sensor_health": {"value": "99.4%", "sub": "3,398 / 3,420 Detectors", "status": "optimal", "label": "Smoke & Fire Sensors"},
-        "fire_station_readiness": {"value": "Station Alpha & Bravo", "sub": "5 Tenders • Hydrant 8.6 Bar", "status": "optimal", "label": "Fire Command Hub"}
+        "fire_station_readiness": {"value": "Stn Alpha & Bravo", "sub": "5 Tenders • Hydrant 8.6 Bar", "status": "optimal", "label": "Fire Command"}
     }
 
 def get_cctv_feeds():

@@ -16,7 +16,7 @@ def render_incident_panel(alarms: list):
         border_style = "border-left: 6px solid #EF4444;" if is_perimeter else f"border-left: 5px solid {badge_color};"
         bg_style = "background: #FFF5F5;" if is_perimeter else "background: #FFFFFF;"
         
-        st.markdown(
+        st.html(
             f"""
             <div class="alarm-item {sev}" style="{border_style} {bg_style}">
                 <div class="alarm-header">
@@ -37,6 +37,5 @@ def render_incident_panel(alarms: list):
                     <span style="color:{status_color}; font-weight:700;">● {alarm['status']}</span>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
