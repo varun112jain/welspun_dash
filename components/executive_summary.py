@@ -176,26 +176,17 @@ def render_energy_mix_chart(energy_data: dict) -> go.Figure:
 def render_executive_video_item(video_info: dict, stream_format: str = "Live Stream"):
     """Renders a single executive video tile with live animation, status HUD, and business impact."""
     with st.container(border=True):
-        # Header HUD
-        badge_color = "#EF4444" if "PATROL" in video_info["status"] or "CRITICAL" in video_info["status"] else "#10B981"
-        pulse_dot = '<span class="pulse-dot-red"></span>' if "PATROL" in video_info["status"] else '<span class="pulse-dot-green"></span>'
-
-        st.html(
-            f"""
-            <div style="background:#020617; color:#FFFFFF; padding:8px 12px; border-radius:6px; margin-bottom:8px; border:1px solid #1E293B; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <span style="font-size:0.70rem; color:#38BDF8; text-transform:uppercase; font-weight:700; letter-spacing:0.06em;">{video_info['sector']}</span><br>
-                    <b style="font-size:0.90rem; color:#F8FAFC;">{video_info['title']}</b>
-                </div>
-                <div style="text-align:right;">
-                    <span style="background:{badge_color}; color:#FFFFFF; font-size:0.70rem; font-weight:800; padding:2px 7px; border-radius:4px;">
-                        {pulse_dot} {video_info['status']}
-                    </span><br>
-                    <span style="font-size:0.70rem; color:#94A3B8; font-family:monospace;">{video_info['camera_id']}</span>
-                </div>
-            </div>
-            """
-        )
+        # Header HUD using native columns
+        h_left, h_right = st.columns([2.2, 1.2])
+        with h_left:
+            st.caption(video_info['sector'].upper())
+            st.markdown(f"**{video_info['title']}**")
+        with h_right:
+            if "PATROL" in video_info["status"] or "CRITICAL" in video_info["status"]:
+                st.error(video_info["status"])
+            else:
+                st.success(video_info["status"])
+            st.caption(f"Camera: `{video_info['camera_id']}`")
 
         # Video / GIF feed rendering
         gif_path = video_info.get("gif", "")
@@ -221,23 +212,15 @@ def render_executive_video_item(video_info: dict, stream_format: str = "Live Str
         if not rendered:
             st.error(f"Feed offline: {video_info['title']}")
 
-        # Executive Strategic Metric Footer
-        st.html(
-            f"""
-            <div style="background:#0F172A; border-radius:6px; padding:10px 12px; margin-top:8px; border:1px solid #1E293B; font-size:0.78rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1E293B; padding-bottom:6px; margin-bottom:6px;">
-                    <span style="color:#94A3B8; text-transform:uppercase; font-size:0.70rem; font-weight:700;">{video_info['kpi_label']}</span>
-                    <b style="color:#38BDF8; font-size:1.02rem; font-family:monospace;">{video_info['kpi_value']}</b>
-                </div>
-                <div style="color:#CBD5E1; margin-bottom:4px;">
-                    <b>Telemetry:</b> {video_info['telemetry']}
-                </div>
-                <div style="color:#34D399; font-size:0.74rem;">
-                    <b>Strategic Impact:</b> {video_info['strategic_impact']}
-                </div>
-            </div>
-            """
-        )
+        # Strategic Metric & Business Impact
+        m_left, m_right = st.columns([1.5, 1.5])
+        with m_left:
+            st.metric(label=video_info['kpi_label'], value=video_info['kpi_value'])
+        with m_right:
+            st.caption("TELEMETRY")
+            st.markdown(f"*{video_info['telemetry']}*")
+        
+        st.info(f"**Strategic Impact:** {video_info['strategic_impact']}", icon="🎯")
 
 def render_executive_summary_screen(stream_format: str = "Live Stream"):
     """Renders the comprehensive Executive Summary & Boardroom Intelligence Screen."""
@@ -249,33 +232,16 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
     milestones = get_strategic_milestones()
 
     # 1. Executive Boardroom Banner
-    st.html(
-        """
-        <div style="background:linear-gradient(135deg, #0A192F 0%, #005BAA 60%, #00A6E6 100%); color:#FFFFFF; padding:16px 20px; border-radius:10px; margin-bottom:14px; box-shadow:0 4px 18px rgba(0, 91, 170, 0.25); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div>
-                <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:#BAE6FD; font-weight:700;">
-                    WELSPUN GROUP • LEADERSHIP COMMAND BRIEFING
-                </div>
-                <div style="font-size:1.45rem; font-weight:800; letter-spacing:0.02em; margin-top:2px;">
-                    Executive Operations, Safety &amp; Production Intelligence
-                </div>
-                <div style="font-size:0.82rem; color:#E0F2FE; margin-top:2px;">
-                    Consolidated 24/7 strategic overview across the 2,500-Acre Anjar Mega Manufacturing Hub.
-                </div>
-            </div>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <div style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); padding:8px 14px; border-radius:8px; text-align:center;">
-                    <div style="font-size:0.68rem; color:#BAE6FD; text-transform:uppercase;">Overall Plant OEE</div>
-                    <div style="font-size:1.25rem; font-weight:800; color:#34D399;">94.8%</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); padding:8px 14px; border-radius:8px; text-align:center;">
-                    <div style="font-size:0.68rem; color:#BAE6FD; text-transform:uppercase;">Workforce on Duty</div>
-                    <div style="font-size:1.25rem; font-weight:800; color:#FFFFFF;">14,820</div>
-                </div>
-            </div>
-        </div>
-        """
-    )
+    with st.container(border=True):
+        b1, b2, b3 = st.columns([2.5, 1, 1])
+        with b1:
+            st.caption("WELSPUN GROUP • LEADERSHIP COMMAND BRIEFING")
+            st.markdown("### Executive Operations, Safety & Production Intelligence")
+            st.caption("Consolidated 24/7 strategic overview across the 2,500-Acre Anjar Mega Manufacturing Hub.")
+        with b2:
+            st.metric("Overall Plant OEE", "94.8%", "World Class")
+        with b3:
+            st.metric("Workforce on Duty", "14,820", "Active on Shift")
 
     # 2. Executive KPI Cards Row (6 Equal Responsive Cards)
     st.html(
@@ -364,26 +330,17 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
     for idx, item in enumerate(milestones):
         col = milestone_cols[idx % 2]
         with col:
-            prio_color = "#005BAA" if item["priority"] == "HIGH" else ("#F59E0B" if item["priority"] == "ACTION REQUIRED" else "#10B981")
-            st.html(
-                f"""
-                <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-left:4px solid {prio_color}; border-radius:8px; padding:12px 14px; margin-bottom:10px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                        <span style="font-size:0.72rem; color:#64748B; text-transform:uppercase; font-weight:700;">{item['domain']}</span>
-                        <span style="background:rgba(0, 91, 170, 0.1); color:{prio_color}; font-size:0.70rem; font-weight:800; padding:2px 7px; border-radius:4px;">
-                            {item['status']}
-                        </span>
-                    </div>
-                    <div style="font-size:0.95rem; font-weight:700; color:#0F172A; margin-bottom:4px;">
-                        {item['title']}
-                    </div>
-                    <div style="font-size:0.78rem; color:#475569; margin-bottom:6px; line-height:1.35;">
-                        {item['impact']}
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:#64748B; border-top:1px solid #F1F5F9; padding-top:6px;">
-                        <span>Lead: <b>{item['lead']}</b></span>
-                        <span>Target: <b style="color:#0F172A;">{item['deadline']}</b></span>
-                    </div>
-                </div>
-                """
-            )
+            with st.container(border=True):
+                m_h1, m_h2 = st.columns([2, 1.2])
+                with m_h1:
+                    st.caption(item['domain'].upper())
+                    st.markdown(f"**{item['title']}**")
+                with m_h2:
+                    if item["priority"] == "HIGH":
+                        st.info(item['status'])
+                    elif item["priority"] == "ACTION REQUIRED":
+                        st.warning(item['status'])
+                    else:
+                        st.success(item['status'])
+                st.markdown(f"{item['impact']}")
+                st.caption(f"Lead: **{item['lead']}** | Target: **{item['deadline']}**")

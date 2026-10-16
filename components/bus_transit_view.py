@@ -71,46 +71,34 @@ def render_bus_transit_screen(stream_format: str = "Live Stream"):
             render_cctv_video_card(feeds[1], stream_format=stream_format)
 
         # AI Driver Status Monitoring (DSM) & Cabin Safety Matrix
-        st.html(
-            """
-            <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 16px; margin-top:4px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="color:#38BDF8; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">
-                        AI Driver Status Monitoring (DSM) &amp; Fatigue Telemetry
-                    </span>
-                    <span style="background:rgba(16, 185, 129, 0.2); color:#10B981; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:4px; border:1px solid #059669;">
-                        ● ALL 12 DRIVERS 100% ATTENTIVE
-                    </span>
-                </div>
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; font-size:0.78rem; color:#CBD5E1;">
-                    <div>Eye Blink Rate: <b style="color:#10B981;">NORMAL (14/min)</b></div>
-                    <div>Yawn / Head Tilt: <b style="color:#10B981;">ZERO DETECTED</b></div>
-                    <div>Speed Governor: <b style="color:#38BDF8;">LOCKED (50 KM/H MAX)</b></div>
-                </div>
-            </div>
-            """
-        )
+        with st.container(border=True):
+            d_hdr1, d_hdr2 = st.columns([2.2, 1.2])
+            with d_hdr1:
+                st.caption("AI DRIVER STATUS MONITORING (DSM) & FATIGUE TELEMETRY")
+            with d_hdr2:
+                st.success("● ALL 12 DRIVERS ATTENTIVE")
+            
+            dc1, dc2, dc3 = st.columns(3)
+            with dc1:
+                st.markdown("Eye Blink Rate: :green[**NORMAL (14/min)**]")
+            with dc2:
+                st.markdown("Yawn / Head Tilt: :green[**ZERO DETECTED**]")
+            with dc3:
+                st.markdown("Speed Governor: :blue[**LOCKED (50 KM/H)**]")
 
     with col_ctrl_right:
         st.markdown("#### 🚌 Shift Rostering & Employee Transit Timetable")
         
         # Shift Schedule Breakdown
         for item in schedule:
-            st.html(
-                f"""
-                <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-left:4px solid #005BAA; border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
-                    <div>
-                        <b style="color:#0F172A; font-size:0.9rem;">{item['shift']}</b>
-                        <span style="color:#64748B; font-size:0.78rem; margin-left:8px;">🕒 {item['timing']}</span><br>
-                        <span style="font-size:0.78rem; color:#475569;">Fleet Allocation: <b>{item['buses']} Dedicated Buses</b></span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="color:#005BAA; font-weight:700; font-size:0.92rem;">{item['workers_moved']} Workers</span><br>
-                        <span style="color:#10B981; font-size:0.75rem; font-weight:600;">✓ {item['on_time_pct']} On-Time</span>
-                    </div>
-                </div>
-                """
-            )
+            with st.container(border=True):
+                s_c1, s_c2 = st.columns([2, 1.2])
+                with s_c1:
+                    st.markdown(f"**{item['shift']}** — 🕒 `{item['timing']}`")
+                    st.caption(f"Fleet Allocation: **{item['buses']} Dedicated Buses**")
+                with s_c2:
+                    st.markdown(f":blue[**{item['workers_moved']} Workers**]")
+                    st.caption(f":green[✓ {item['on_time_pct']} On-Time]")
 
         st.markdown("#### 🎛️ Employee Shuttle Dispatch & Emergency PA")
         selected_bus = st.selectbox(

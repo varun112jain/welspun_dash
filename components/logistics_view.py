@@ -70,119 +70,90 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
             render_cctv_video_card(feeds[1], stream_format=stream_format)
 
         # Automated Undercarriage & Container Seal Inspection Telemetry
-        st.html(
-            """
-            <div style="background:#0F172A; border:1px solid #334155; border-radius:8px; padding:12px 16px; margin-top:4px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="color:#38BDF8; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">
-                        Automated UVIS Undercarriage &amp; Container Seal AI Scanner
-                    </span>
-                    <span style="background:rgba(16, 185, 129, 0.2); color:#10B981; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:4px; border:1px solid #059669;">
-                        ● SCAN CLEAR • ZERO ANOMALIES
-                    </span>
-                </div>
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; font-size:0.78rem; color:#CBD5E1;">
-                    <div>Chassis Foreign Object: <b style="color:#10B981;">CLEARED (0 Detect)</b></div>
-                    <div>Container Door Seal: <b style="color:#38BDF8;">#WLP-SEAL-8894 INTACT</b></div>
-                    <div>FASTag RFID ID: <b style="color:#A78BFA;">3416-1FA8-9920-55B1</b></div>
-                </div>
-            </div>
-            """
-        )
+        with st.container(border=True):
+            u_hdr1, u_hdr2 = st.columns([2.2, 1.2])
+            with u_hdr1:
+                st.caption("AUTOMATED UVIS UNDERCARRIAGE & SEAL AI SCANNER")
+            with u_hdr2:
+                st.success("● SCAN CLEAR • ZERO ANOMALIES")
+            
+            uc1, uc2, uc3 = st.columns(3)
+            with uc1:
+                st.markdown("Chassis Object: :green[**CLEARED (0 Detect)**]")
+            with uc2:
+                st.markdown("Container Seal: :blue[**#WLP-SEAL-8894 INTACT**]")
+            with uc3:
+                st.markdown("FASTag RFID: `3416-1FA8-9920-55B1`")
 
     with col_tele_right:
         st.markdown("#### ⚖️ Unmanned Weighbridge Automation Platform (WB-01)")
         
-        # Live Digital Weight Scale Display (Industrial look)
+        # Live Digital Weight Scale Display (Native Streamlit Container)
         gross_wt = active_state["gross_weight_kg"]
         tare_wt = active_state["tare_weight_kg"]
         net_wt = active_state["net_weight_kg"]
 
-        st.html(
-            f"""
-            <div style="background:#020617; border:2px solid #005BAA; border-radius:10px; padding:16px; color:#FFFFFF; margin-bottom:12px; box-shadow:0 4px 18px rgba(0, 91, 170, 0.25);">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1E293B; padding-bottom:8px; margin-bottom:12px;">
-                    <div>
-                        <span style="font-size:0.72rem; color:#38BDF8; text-transform:uppercase; font-weight:700; letter-spacing:0.06em;">Digital Load Cell Weighment Indicator</span><br>
-                        <b style="font-size:1.05rem; color:#F8FAFC;">{active_state['truck_plate']}</b> 
-                        <span style="font-size:0.8rem; color:#94A3B8;">({active_state['transporter']})</span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="background:#10B981; color:#020617; font-weight:800; font-size:0.78rem; padding:3px 8px; border-radius:4px;">
-                            WEIGHT STABILIZED
-                        </span><br>
-                        <span style="font-size:0.72rem; color:#94A3B8;">Ticket: {active_state['weight_slip_no']}</span>
-                    </div>
-                </div>
-                
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; text-align:center; background:#0F172A; padding:12px; border-radius:8px; border:1px solid #334155;">
-                    <div>
-                        <div style="font-size:0.70rem; color:#94A3B8; text-transform:uppercase;">Gross Weight</div>
-                        <div style="font-size:1.55rem; font-weight:800; color:#38BDF8; font-family:monospace;">{gross_wt:,} KG</div>
-                        <div style="font-size:0.68rem; color:#64748B;">±0.0 kg stability</div>
-                    </div>
-                    <div style="border-left:1px solid #334155; border-right:1px solid #334155;">
-                        <div style="font-size:0.70rem; color:#94A3B8; text-transform:uppercase;">Tare Weight</div>
-                        <div style="font-size:1.55rem; font-weight:800; color:#CBD5E1; font-family:monospace;">{tare_wt:,} KG</div>
-                        <div style="font-size:0.68rem; color:#64748B;">Registered RTO Baseline</div>
-                    </div>
-                    <div>
-                        <div style="font-size:0.70rem; color:#94A3B8; text-transform:uppercase;">Net Material Wt</div>
-                        <div style="font-size:1.55rem; font-weight:800; color:#10B981; font-family:monospace;">{net_wt:,} KG</div>
-                        <div style="font-size:0.68rem; color:#10B981; font-weight:600;">28.63 Metric Tons</div>
-                    </div>
-                </div>
-
-                <div style="margin-top:12px; font-size:0.78rem; color:#CBD5E1; background:rgba(0,0,0,0.4); padding:10px; border-radius:6px;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span><b>Cargo Material:</b> {active_state['material']}</span>
-                        <span style="color:#38BDF8;"><b>Vendor:</b> {active_state['sap_vendor_code']}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #1E293B; padding-top:6px; margin-top:6px;">
-                        <span><b>IR Platform Position:</b> <span style="color:#10B981;">✓ 100% On-Deck (Zero Overhang)</span></span>
-                        <span><b>Boom Barrier:</b> <span style="color:#10B981; font-weight:bold;">● {active_state['boom_barrier_state']}</span></span>
-                    </div>
-                </div>
-            </div>
-            """
-        )
+        with st.container(border=True):
+            col_hdr1, col_hdr2 = st.columns([2, 1.2])
+            with col_hdr1:
+                st.caption("DIGITAL LOAD CELL WEIGHMENT INDICATOR")
+                st.subheader(f"{active_state['truck_plate']}")
+                st.caption(f"Transporter: **{active_state['transporter']}**")
+            with col_hdr2:
+                st.success("● WEIGHT STABILIZED")
+                st.caption(f"Ticket: `{active_state['weight_slip_no']}`")
+            
+            # 3 High-Impact Real-Time Metrics
+            m1, m2, m3 = st.columns(3)
+            with m1:
+                st.metric(
+                    label="Gross Weight",
+                    value=f"{gross_wt:,} KG",
+                    delta="±0.0 kg stability",
+                    delta_color="normal"
+                )
+            with m2:
+                st.metric(
+                    label="Tare Weight",
+                    value=f"{tare_wt:,} KG",
+                    delta="Registered RTO Baseline",
+                    delta_color="off"
+                )
+            with m3:
+                st.metric(
+                    label="Net Material Wt",
+                    value=f"{net_wt:,} KG",
+                    delta=f"{net_wt/1000:.2f} Metric Tons",
+                    delta_color="normal"
+                )
+            
+            st.divider()
+            
+            det1, det2 = st.columns(2)
+            with det1:
+                st.markdown(f"**Cargo Material:** {active_state['material']}")
+                st.markdown("**IR Platform Position:** :green[✓ 100% On-Deck (Zero Overhang)]")
+            with det2:
+                st.markdown(f"**Vendor:** `{active_state['sap_vendor_code']}`")
+                st.markdown(f"**Boom Barrier:** :green[**● {active_state['boom_barrier_state']}**]")
 
         # 3. SAP S/4HANA ERP Seamless Integration Module
         st.markdown("#### 🔗 Seamless SAP S/4HANA ERP Integration")
-        st.html(
-            f"""
-            <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:4px solid #005BAA; border-radius:10px; padding:14px 16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="background:#005BAA; color:#FFFFFF; font-weight:800; font-size:0.78rem; padding:3px 8px; border-radius:4px;">SAP S/4HANA</span>
-                        <b style="font-size:0.92rem; color:#0F172A;">Enterprise RFC / OData Sync</b>
-                    </div>
-                    <span style="color:#10B981; font-size:0.78rem; font-weight:700;">
-                        ● CONNECTED (Latency: 12ms)
-                    </span>
-                </div>
-                
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px; font-size:0.80rem; color:#334155; line-height:1.5;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span><b>Mapped SAP PO Number:</b></span>
-                        <span style="color:#005BAA; font-weight:700;">{active_state['sap_po_number']}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span><b>Automated MIGO Goods Receipt Doc:</b></span>
-                        <span style="color:#10B981; font-weight:700;">#{active_state['sap_migo_doc']}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span><b>Movement Type:</b></span>
-                        <span><b>101 GR against PO</b> (Plant 2001 - Anjar Mega Complex)</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between;">
-                        <span><b>Weighment Discrepancy:</b></span>
-                        <span style="color:#10B981; font-weight:600;">0.00% (Within ±0.5% PO Tolerance)</span>
-                    </div>
-                </div>
-            </div>
-            """
-        )
+        with st.container(border=True):
+            sap_h1, sap_h2 = st.columns([2, 1.2])
+            with sap_h1:
+                st.caption("ENTERPRISE RFC / ODATA SYNC")
+                st.markdown("### SAP S/4HANA")
+            with sap_h2:
+                st.success("● CONNECTED (Latency: 12ms)")
+            
+            sap_c1, sap_c2 = st.columns(2)
+            with sap_c1:
+                st.markdown(f"**Mapped SAP PO Number:** `{active_state['sap_po_number']}`")
+                st.markdown(f"**Automated MIGO Goods Receipt:** :green[**#{active_state['sap_migo_doc']}**]")
+            with sap_c2:
+                st.markdown("**Movement Type:** 101 GR against PO (Plant 2001)")
+                st.markdown("**Weighment Discrepancy:** :green[**0.00% (Within ±0.5% PO Tolerance)**]")
 
         # Interactive Simulation Trigger
         col_btn1, col_btn2 = st.columns(2)

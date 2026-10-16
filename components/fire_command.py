@@ -52,37 +52,23 @@ def render_fire_network_panel(fire_data: dict):
     stations = fire_data.get("stations", [])
     if len(stations) >= 2:
         with col_st1:
-            st.html(
-                f"""
-                <div class="fire-panel" style="border-top: 3px solid #005BAA;">
-                    <div class="fire-panel-header">
-                        <span>🏢 {stations[0]['name']}</span>
-                        <span style="color:#10B981; font-size:0.8rem; font-weight:700;">● {stations[0]['readiness']}</span>
-                    </div>
-                    <div style="font-size:0.85rem; color:#475569; margin-bottom:8px;">
-                        <b>Crew on Duty:</b> {stations[0]['crew_on_duty']} Firefighters & Hazmat Techs<br>
-                        <b>Primary Sector:</b> {stations[0]['coverage']}<br>
-                        <b>Proximity to Plant Core:</b> {stations[0]['distance_to_core']}
-                    </div>
-                </div>
-                """
-            )
+            with st.container(border=True):
+                h1, h2 = st.columns([2, 1.2])
+                with h1:
+                    st.markdown(f"**🏢 {stations[0]['name']}**")
+                with h2:
+                    st.success(f"● {stations[0]['readiness']}")
+                st.caption(f"Crew on Duty: **{stations[0]['crew_on_duty']} Firefighters & Hazmat Techs**")
+                st.caption(f"Sector: **{stations[0]['coverage']}** | Core Proximity: **{stations[0]['distance_to_core']}**")
         with col_st2:
-            st.html(
-                f"""
-                <div class="fire-panel" style="border-top: 3px solid #3071A9;">
-                    <div class="fire-panel-header">
-                        <span>🏡 {stations[1]['name']}</span>
-                        <span style="color:#10B981; font-size:0.8rem; font-weight:700;">● {stations[1]['readiness']}</span>
-                    </div>
-                    <div style="font-size:0.85rem; color:#475569; margin-bottom:8px;">
-                        <b>Crew on Duty:</b> {stations[1]['crew_on_duty']} Firefighters & EMS Officers<br>
-                        <b>Primary Sector:</b> {stations[1]['coverage']}<br>
-                        <b>Proximity to City Centre:</b> {stations[1]['distance_to_core']}
-                    </div>
-                </div>
-                """
-            )
+            with st.container(border=True):
+                h1, h2 = st.columns([2, 1.2])
+                with h1:
+                    st.markdown(f"**🏡 {stations[1]['name']}**")
+                with h2:
+                    st.success(f"● {stations[1]['readiness']}")
+                st.caption(f"Crew on Duty: **{stations[1]['crew_on_duty']} Firefighters & EMS Officers**")
+                st.caption(f"Sector: **{stations[1]['coverage']}** | Proximity: **{stations[1]['distance_to_core']}**")
             
     # Fleet Table & Dispatch
     st.markdown("#### 🚨 Fleet Readiness & Active Tenders")
@@ -90,20 +76,13 @@ def render_fire_network_panel(fire_data: dict):
     
     for tender in fleet:
         is_dispatched = "Dispatched" in tender["status"]
-        chip_class = "dispatched" if is_dispatched else ""
-        status_badge = f"<span style='color:#EF4444; font-weight:bold;'>⚡ {tender['status']}</span>" if is_dispatched else f"<span style='color:#10B981; font-weight:bold;'>✓ {tender['status']}</span>"
-        
-        st.html(
-            f"""
-            <div class="tender-chip {chip_class}">
-                <div>
-                    <b>{tender['id']}</b> — {tender['name']}
-                    <span style="color:#64748B; font-size:0.8rem; margin-left:8px;">({tender['station']})</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:16px;">
-                    <span style="color:#475569; font-size:0.8rem;">Fuel: <b>{tender['fuel']}</b> | Foam: <b>{tender['foam_lvl']}</b></span>
-                    {status_badge}
-                </div>
-            </div>
-            """
-        )
+        with st.container(border=True):
+            t1, t2 = st.columns([2, 1.2])
+            with t1:
+                st.markdown(f"**{tender['id']}** — {tender['name']} `({tender['station']})`")
+                st.caption(f"Fuel: **{tender['fuel']}** | Foam: **{tender['foam_lvl']}**")
+            with t2:
+                if is_dispatched:
+                    st.error(f"⚡ {tender['status']}")
+                else:
+                    st.success(f"✓ {tender['status']}")
