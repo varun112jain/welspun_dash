@@ -3,6 +3,7 @@ Executive Summary & Boardroom Intelligence Data Service for Welspun City, Anjar
 Consolidates high-level strategic telemetry across Heavy Industry (WCL, WDI, WLL),
 Logistics Automation, Workforce Transit, Plant Safety, and Sustainability.
 """
+import os
 from typing import Dict, List, Any
 
 def get_executive_kpis() -> Dict[str, Dict[str, Any]]:
@@ -60,15 +61,16 @@ def get_executive_kpis() -> Dict[str, Dict[str, Any]]:
 
 def get_executive_video_showcases() -> List[Dict[str, Any]]:
     """Returns 4 premier video streams highlighting key operational zones."""
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
     return [
         {
             "id": "EXEC-01",
             "sector": "Heavy Metallurgy & Pipes",
             "title": "WCL LSAW & Spiral Pipe Manufacturing Mill",
             "camera_id": "CAM-06",
-            "video": "assets/video_wcl_pipe_mill.mp4",
-            "gif": "assets/video_wcl_pipe_mill.gif",
-            "image": "assets/cctv_wcl_pipe_mill.jpg",
+            "video": os.path.join(base_dir, "video_wcl_pipe_mill.mp4"),
+            "gif": os.path.join(base_dir, "video_wcl_pipe_mill.gif"),
+            "image": os.path.join(base_dir, "cctv_wcl_pipe_mill.jpg"),
             "status": "● 100% OPERATIONAL",
             "kpi_label": "Line Visual Status",
             "kpi_value": "MONITORING ACTIVE",
@@ -79,9 +81,9 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "sector": "Primary Ironmaking & Casting",
             "title": "WDI 500k TPA Blast Furnace & DI Plant",
             "camera_id": "CAM-07",
-            "video": "assets/video_wdi_blast_furnace.mp4",
-            "gif": "assets/video_wdi_blast_furnace.gif",
-            "image": "assets/cctv_blast_furnace.jpg",
+            "video": os.path.join(base_dir, "video_wdi_blast_furnace.mp4"),
+            "gif": os.path.join(base_dir, "video_wdi_blast_furnace.gif"),
+            "image": os.path.join(base_dir, "cctv_blast_furnace.jpg"),
             "status": "● NOMINAL TAPPING",
             "kpi_label": "Furnace Zone Visual",
             "kpi_value": "TAP RUNNER ACTIVE",
@@ -92,9 +94,9 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "sector": "Logistics & Autonomous Inbound",
             "title": "Unmanned Weighbridge Gate 1 (SAP S/4HANA)",
             "camera_id": "CAM-WB01",
-            "video": "assets/video_unmanned_weighbridge.mp4",
-            "gif": "assets/video_unmanned_weighbridge.gif",
-            "image": "assets/cctv_unmanned_weighbridge.jpg",
+            "video": os.path.join(base_dir, "video_unmanned_weighbridge.mp4"),
+            "gif": os.path.join(base_dir, "video_unmanned_weighbridge.gif"),
+            "image": os.path.join(base_dir, "cctv_unmanned_weighbridge.jpg"),
             "status": "● ZERO SCALEMASTER",
             "kpi_label": "Cycle Clearance",
             "kpi_value": "142 Sec / Truck",
@@ -105,9 +107,9 @@ def get_executive_video_showcases() -> List[Dict[str, Any]]:
             "sector": "Critical Infrastructure & Security",
             "title": "220kV Switchyard AI Perimeter Tripwire",
             "camera_id": "CAM-04",
-            "video": "assets/video_perimeter_breach.mp4",
-            "gif": "assets/video_perimeter_breach.gif",
-            "image": "assets/cctv_perimeter_fence.jpg",
+            "video": os.path.join(base_dir, "video_perimeter_breach.mp4"),
+            "gif": os.path.join(base_dir, "video_perimeter_breach.gif"),
+            "image": os.path.join(base_dir, "cctv_perimeter_fence.jpg"),
             "status": "⚠️ PATROL INTERCEPT",
             "kpi_label": "Threat Level",
             "kpi_value": "CONTAINED",
