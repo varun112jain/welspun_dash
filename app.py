@@ -246,14 +246,14 @@ st.html(
 )
 
 # ----------------- TABS WORKSPACE -----------------
-tab_exec, tab_video, tab_logistics, tab_sensors, tab_buses, tab_fire, tab_alerts, tab_map = st.tabs([
+tab_exec, tab_video, tab_logistics, tab_buses, tab_alerts, tab_sensors, tab_fire, tab_map = st.tabs([
     "📊 Executive Operational Summary",
     "🎥 CCTV Multi-Screen Video Wall",
     "🚛 Logistics & Unmanned Weighbridge",
-    "🔥 Smoke & Fire Sensor Health",
     "🚌 Employee Transit & Commuter Bus Fleet",
-    "🚒 Networked Fire Station Hub",
     "⚠️ Live Alarms & Security Log",
+    "🔥 Smoke & Fire Sensor Health",
+    "🚒 Networked Fire Station Hub",
     "🗺️ Welspun City Spatial Topology Map"
 ])
 
@@ -323,15 +323,41 @@ with tab_video:
 with tab_logistics:
     render_logistics_screen(stream_format=stream_fmt)
 
-# ----------------- TAB 3: SENSOR HEALTH -----------------
-with tab_sensors:
-    render_sensor_health_panel(sensor_health)
-
-# ----------------- TAB 4: EMPLOYEE TRANSIT BUSES -----------------
+# ----------------- TAB 3: EMPLOYEE TRANSIT BUSES -----------------
 with tab_buses:
     render_bus_transit_screen(stream_format=stream_fmt)
 
-# ----------------- TAB 5: FIRE NETWORK -----------------
+# ----------------- TAB 4: ALARMS & INCIDENTS -----------------
+with tab_alerts:
+    col_a_feed, col_a_sim = st.columns([2.2, 1])
+    with col_a_feed:
+        render_incident_panel(alarms_data)
+    with col_a_sim:
+        st.markdown("### ⚡ Security & Safety Command")
+        st.html(
+            """
+            <div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:14px; margin-bottom:14px;">
+                <div style="color:#991B1B; font-weight:bold; font-size:0.95rem; margin-bottom:4px;">🚨 Active Security Event</div>
+                <div style="color:#7F1D1D; font-size:0.85rem;">
+                    Sector 4 West Tripwire breached. Video recording flagged for security review.
+                </div>
+            </div>
+            """
+        )
+        if st.button("📢 Broadcast Perimeter Evacuation PA Siren", use_container_width=True, type="secondary"):
+            st.warning("Perimeter Horn Sounded at Sector 4 Boundary.")
+        if st.button("🚔 Dispatch Rapid Security Intervention Vehicle", use_container_width=True):
+            st.error("Quick Response Security Squad dispatched to Sector 4.")
+        if st.button("✅ Mark Perimeter Zone Inspected & Secured", use_container_width=True):
+            st.session_state["perimeter_alert_active"] = False
+            st.success("Perimeter status updated to SECURE.")
+            st.rerun()
+
+# ----------------- TAB 5: SENSOR HEALTH -----------------
+with tab_sensors:
+    render_sensor_health_panel(sensor_health)
+
+# ----------------- TAB 6: FIRE NETWORK -----------------
 with tab_fire:
     col_f_left, col_f_right = st.columns([1.8, 1.2])
     with col_f_left:
@@ -381,32 +407,6 @@ with tab_fire:
             </div>
             """
         )
-
-# ----------------- TAB 6: ALARMS & INCIDENTS -----------------
-with tab_alerts:
-    col_a_feed, col_a_sim = st.columns([2.2, 1])
-    with col_a_feed:
-        render_incident_panel(alarms_data)
-    with col_a_sim:
-        st.markdown("### ⚡ Security & Safety Command")
-        st.html(
-            """
-            <div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:8px; padding:14px; margin-bottom:14px;">
-                <div style="color:#991B1B; font-weight:bold; font-size:0.95rem; margin-bottom:4px;">🚨 Active Security Event</div>
-                <div style="color:#7F1D1D; font-size:0.85rem;">
-                    Sector 4 West Tripwire breached. Video recording flagged for security review.
-                </div>
-            </div>
-            """
-        )
-        if st.button("📢 Broadcast Perimeter Evacuation PA Siren", use_container_width=True, type="secondary"):
-            st.warning("Perimeter Horn Sounded at Sector 4 Boundary.")
-        if st.button("🚔 Dispatch Rapid Security Intervention Vehicle", use_container_width=True):
-            st.error("Quick Response Security Squad dispatched to Sector 4.")
-        if st.button("✅ Mark Perimeter Zone Inspected & Secured", use_container_width=True):
-            st.session_state["perimeter_alert_active"] = False
-            st.success("Perimeter status updated to SECURE.")
-            st.rerun()
 
 # ----------------- TAB 7: SPATIAL MAP -----------------
 with tab_map:
