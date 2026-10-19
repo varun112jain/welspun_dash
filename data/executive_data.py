@@ -24,38 +24,6 @@ def get_executive_kpis() -> Dict[str, Dict[str, Any]]:
             "delta": "Zero Fatalities / LTI",
             "status": "optimal",
             "sub": "ISO 45001 & British Safety Council 5-Star"
-        },
-        "logistics_automation": {
-            "title": "Weighbridge Automation",
-            "value": "99.4%",
-            "target": "1,842 Trucks Handled",
-            "delta": "100% Paperless MIGO",
-            "status": "optimal",
-            "sub": "Avg Gate Turnaround: 4.8 min (Target < 6 min)"
-        },
-        "sap_transacted_value": {
-            "title": "Automated SAP Velocity",
-            "value": "₹42.8 Cr",
-            "target": "Daily Inbound/Outbound",
-            "delta": "+12ms RFC Latency",
-            "status": "optimal",
-            "sub": "Direct SAP S/4HANA PO/MIGO Settlement"
-        },
-        "clean_energy_share": {
-            "title": "Green Energy & Self-Reliance",
-            "value": "100%",
-            "target": "165 MW Total Generation",
-            "delta": "14 MW Export to Grid",
-            "status": "optimal",
-            "sub": "123MW CPP + 42MW Rooftop & Ground Solar"
-        },
-        "ai_threat_prevention": {
-            "title": "AI Autonomous Interceptions",
-            "value": "148 Events",
-            "target": "100% Mitigated",
-            "delta": "Zero Asset Loss",
-            "status": "optimal",
-            "sub": "Perimeter • Thermal Hotspots • Driver Fatigue"
         }
     }
 

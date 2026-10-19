@@ -195,35 +195,11 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
         'delta': 'Zero Fatalities / LTI',
         'target': '18.4M Safe Hours'
     }
-    log_kpi = kpis.get('logistics_automation') or {
-        'title': 'Weighbridge Automation',
-        'value': '99.4%',
-        'delta': '100% Paperless MIGO',
-        'target': '1,842 Trucks Handled'
-    }
-    sap_kpi = kpis.get('sap_transacted_value') or {
-        'title': 'Automated SAP Velocity',
-        'value': '₹42.8 Cr',
-        'target': 'Daily Inbound/Outbound',
-        'delta': '+12ms RFC Latency'
-    }
-    clean_kpi = kpis.get('clean_energy_share') or {
-        'title': 'Green Energy & Self-Reliance',
-        'value': '100%',
-        'delta': '14 MW Export to Grid',
-        'target': '165 MW Total Generation'
-    }
-    ai_kpi = kpis.get('ai_threat_prevention') or {
-        'title': 'AI Autonomous Interceptions',
-        'value': '148 Events',
-        'delta': 'Zero Asset Loss',
-        'target': '100% Mitigated'
-    }
 
-    # 2. Executive KPI Cards Row (6 Equal Responsive Cards)
+    # 2. Executive KPI Cards Row
     st.html(
         f"""
-        <div class="kpi-grid" style="margin-bottom:1.2rem;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-bottom:1.2rem;">
             <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
                 <div class="surv-kpi-label">{cctv_kpi['title']}</div>
                 <div class="surv-kpi-val" style="color:#005BAA;">{cctv_kpi['value']}</div>
@@ -233,26 +209,6 @@ def render_executive_summary_screen(stream_format: str = "Live Stream"):
                 <div class="surv-kpi-label">{safe_kpi['title']}</div>
                 <div class="surv-kpi-val" style="color:#059669;">{safe_kpi['value']}</div>
                 <div class="surv-kpi-sub"><b>{safe_kpi['delta']}</b> ({safe_kpi['target']})</div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #00A6E6;">
-                <div class="surv-kpi-label">{log_kpi['title']}</div>
-                <div class="surv-kpi-val" style="color:#0284C7;">{log_kpi['value']}</div>
-                <div class="surv-kpi-sub"><b>{log_kpi['delta']}</b> • {log_kpi['target']}</div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #005BAA;">
-                <div class="surv-kpi-label">{sap_kpi['title']}</div>
-                <div class="surv-kpi-val" style="color:#005BAA;">{sap_kpi['value']}</div>
-                <div class="surv-kpi-sub"><b>{sap_kpi['target']}</b> ({sap_kpi['delta']})</div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #10B981;">
-                <div class="surv-kpi-label">{clean_kpi['title']}</div>
-                <div class="surv-kpi-val" style="color:#059669;">{clean_kpi['value']}</div>
-                <div class="surv-kpi-sub"><b>{clean_kpi['delta']}</b> • {clean_kpi['target']}</div>
-            </div>
-            <div class="surv-kpi-card optimal" style="border-left-color: #00A6E6;">
-                <div class="surv-kpi-label">{ai_kpi['title']}</div>
-                <div class="surv-kpi-val" style="color:#0284C7;">{ai_kpi['value']}</div>
-                <div class="surv-kpi-sub"><b>{ai_kpi['delta']}</b> ({ai_kpi['target']})</div>
             </div>
         </div>
         """
