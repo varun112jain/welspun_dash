@@ -246,12 +246,12 @@ st.html(
 )
 
 # ----------------- TABS WORKSPACE -----------------
-tab_exec, tab_video, tab_logistics, tab_buses, tab_sensors, tab_fire, tab_alerts, tab_map = st.tabs([
+tab_exec, tab_video, tab_logistics, tab_sensors, tab_buses, tab_fire, tab_alerts, tab_map = st.tabs([
     "📊 Executive Operational Summary",
     "🎥 CCTV Multi-Screen Video Wall",
-    "🚛 Logistics & Unmanned Weighbridge (SAP S/4HANA)",
-    "🚌 Employee Transit & Commuter Bus Fleet",
+    "🚛 Logistics & Unmanned Weighbridge",
     "🔥 Smoke & Fire Sensor Health",
+    "🚌 Employee Transit & Commuter Bus Fleet",
     "🚒 Networked Fire Station Hub",
     "⚠️ Live Alarms & Security Log",
     "🗺️ Welspun City Spatial Topology Map"
@@ -323,13 +323,13 @@ with tab_video:
 with tab_logistics:
     render_logistics_screen(stream_format=stream_fmt)
 
-# ----------------- TAB 3: EMPLOYEE TRANSIT BUSES -----------------
-with tab_buses:
-    render_bus_transit_screen(stream_format=stream_fmt)
-
-# ----------------- TAB 4: SENSOR HEALTH -----------------
+# ----------------- TAB 3: SENSOR HEALTH -----------------
 with tab_sensors:
     render_sensor_health_panel(sensor_health)
+
+# ----------------- TAB 4: EMPLOYEE TRANSIT BUSES -----------------
+with tab_buses:
+    render_bus_transit_screen(stream_format=stream_fmt)
 
 # ----------------- TAB 5: FIRE NETWORK -----------------
 with tab_fire:

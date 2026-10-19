@@ -20,8 +20,8 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
     active_state = get_current_weighment_state()
     truck_log = get_logistics_truck_log()
 
-    # 1. Top KPI Row (Native Streamlit Metrics)
-    k1, k2, k3, k4, k5, k6 = st.columns(6)
+    # 1. Top KPI Row (4 Verified Operational Metrics)
+    k1, k2, k3, k4 = st.columns(4)
     with k1:
         with st.container(border=True):
             st.caption("TRUCK TRAFFIC")
@@ -36,27 +36,16 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
             st.metric("Avg Gate Time", kpi_data['avg_turnaround_min']['value'], kpi_data['avg_turnaround_min']['sub'])
     with k4:
         with st.container(border=True):
-            st.caption("SAP S/4HANA")
-            st.metric("Sync Status", kpi_data['sap_sync_health']['value'], kpi_data['sap_sync_health']['sub'])
-    with k5:
-        with st.container(border=True):
             st.caption("SCALES")
             st.metric("Active Scales", kpi_data['active_weighbridges']['value'], kpi_data['active_weighbridges']['sub'])
-    with k6:
-        with st.container(border=True):
-            st.caption("COMPLIANCE")
-            st.metric("Tolerance", kpi_data['weight_tolerance']['value'], kpi_data['weight_tolerance']['sub'])
 
-    # 2. Main Layout: Left 2 Columns for Live Feeds, Right Column for Unmanned Automation & SAP Sync
-    col_video_left, col_tele_right = st.columns([1.6, 1.4])
+    # 2. Main Layout: Left Column for Weighbridge Overhead CCTV & UVIS Scanner, Right Column for Digital Scale Telemetry
+    col_video_left, col_tele_right = st.columns([1.5, 1.5])
 
     with col_video_left:
-        st.markdown("#### 🎥 Logistics Gate, Weighbridge & Supporting Dashcam Feeds")
-        feed_cols = st.columns(2)
-        with feed_cols[0]:
-            render_cctv_video_card(feeds[0], stream_format=stream_format)
-        with feed_cols[1]:
-            render_cctv_video_card(feeds[1], stream_format=stream_format)
+        st.markdown("#### 🎥 Logistics Gate & Unmanned Weighbridge Overhead CCTV")
+        # Only weighbridge overhead camera (CAM-WB01); truck dashcam omitted per requirement
+        render_cctv_video_card(feeds[0], stream_format=stream_format)
 
         # Automated Undercarriage & Container Seal Inspection Telemetry
         with st.container(border=True):
@@ -123,45 +112,49 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
                 st.markdown(f"**Cargo Material:** {active_state['material']}")
                 st.markdown("**IR Platform Position:** :green[✓ 100% On-Deck (Zero Overhang)]")
             with det2:
-                st.markdown(f"**Vendor:** `{active_state['sap_vendor_code']}`")
-                st.markdown(f"**Boom Barrier:** :green[**● {active_state['boom_barrier_state']}**]")
+                st.markdown("**Barrier State:** :green[**● OPEN (AUTOMATED CLEARANCE)**]")
+                st.markdown("**Scale Deck Light:** :green[**● GREEN (PROCEED)**]")
 
-        # 3. SAP S/4HANA ERP Seamless Integration Module
-        st.markdown("#### 🔗 Seamless SAP S/4HANA ERP Integration")
+        # 3. 6-Point Electronic Load Cell Distribution Array
+        st.markdown("#### 🎛️ Digital Load Cell Weight Sensors (6-Point Deck Array)")
         with st.container(border=True):
-            sap_h1, sap_h2 = st.columns([2, 1.2])
-            with sap_h1:
-                st.caption("ENTERPRISE RFC / ODATA SYNC")
-                st.markdown("### SAP S/4HANA")
-            with sap_h2:
-                st.success("● CONNECTED (Latency: 12ms)")
+            lc_h1, lc_h2 = st.columns([2, 1.2])
+            with lc_h1:
+                st.caption("CALIBRATED SENSOR DISTRIBUTION")
+                st.markdown("##### 100 MT Electronic Deck Array")
+            with lc_h2:
+                st.success("● ALL CELLS BALANCED")
             
-            sap_c1, sap_c2 = st.columns(2)
-            with sap_c1:
-                st.markdown(f"**Mapped SAP PO Number:** `{active_state['sap_po_number']}`")
-                st.markdown(f"**Automated MIGO Goods Receipt:** :green[**#{active_state['sap_migo_doc']}**]")
-            with sap_c2:
-                st.markdown("**Movement Type:** 101 GR against PO (Plant 2001)")
-                st.markdown("**Weighment Discrepancy:** :green[**0.00% (Within ±0.5% PO Tolerance)**]")
+            lc1, lc2, lc3 = st.columns(3)
+            with lc1:
+                st.metric("LC-1 Front Left", f"{active_state['load_cells'][0]['weight_kg']:,} kg", "Normal")
+                st.metric("LC-2 Front Right", f"{active_state['load_cells'][1]['weight_kg']:,} kg", "Normal")
+            with lc2:
+                st.metric("LC-3 Mid Left", f"{active_state['load_cells'][2]['weight_kg']:,} kg", "Normal")
+                st.metric("LC-4 Mid Right", f"{active_state['load_cells'][3]['weight_kg']:,} kg", "Normal")
+            with lc3:
+                st.metric("LC-5 Rear Left", f"{active_state['load_cells'][4]['weight_kg']:,} kg", "Normal")
+                st.metric("LC-6 Rear Right", f"{active_state['load_cells'][5]['weight_kg']:,} kg", "Normal")
 
-        # Interactive Simulation Trigger
+        # Interactive Scale Action Buttons
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
-            if st.button("⚡ Simulate Inbound Weighment", use_container_width=True, type="primary"):
-                st.toast("TRUCK DETECTED: ANPR GJ-12-BW-9842 Verified. Auto-Weighing...", icon="⚖️")
-                st.toast("SAP MIGO #5002918491 Generated & Committed in SAP S/4HANA!", icon="✅")
+            if st.button("⚡ Trigger Scale Calibration / Re-Zero", use_container_width=True, type="primary"):
+                st.toast("CALIBRATION OK: 6 Load Cells Balanced. Deck Zero Offset Verified.", icon="⚖️")
         with col_btn2:
-            if st.button("🖨️ Re-Print SAP Weigh Slip", use_container_width=True):
-                st.toast("Weigh Slip #WS-2026-10492 sent to Gate 1 Thermal Kiosk.", icon="📄")
+            if st.button("🖨️ Print Digital Weight Slip", use_container_width=True):
+                st.toast("Weight Slip #WS-2026-10492 printed at Gate 1 Kiosk.", icon="📄")
 
-    # 4. Comprehensive Truck Movements & SAP Posting Table
+    # 4. Comprehensive Truck Movements Table (Pure Operational Weighment Data)
     st.markdown("---")
-    st.markdown("#### 📋 Real-Time Inbound & Outbound Truck Log (Integrated with SAP S/4HANA)")
-    st.caption("Showing 100% automated weighments, zero manual scalemaster interventions, and immediate MIGO/PGI document generation.")
+    st.markdown("#### 📋 Real-Time Inbound & Outbound Truck Weighment Log")
+    st.caption("Showing automated weighments, vehicle license plates, verified scale weights, and gate clearance status.")
 
     df_trucks = pd.DataFrame(truck_log)
+    # Remove SAP-specific columns per requirement
+    display_cols = [c for c in df_trucks.columns if c not in ["sap_po_so", "sap_doc"]]
     st.dataframe(
-        df_trucks,
+        df_trucks[display_cols],
         use_container_width=True,
         hide_index=True,
         column_config={
@@ -173,8 +166,6 @@ def render_logistics_screen(stream_format: str = "Live Stream"):
             "gross_kg": st.column_config.NumberColumn("Gross Wt (kg)", format="%d"),
             "tare_kg": st.column_config.NumberColumn("Tare Wt (kg)", format="%d"),
             "net_kg": st.column_config.NumberColumn("Net Wt (kg)", format="%d"),
-            "sap_po_so": st.column_config.TextColumn("SAP PO / SO"),
-            "sap_doc": st.column_config.TextColumn("SAP Material Doc"),
             "weight_slip": st.column_config.TextColumn("Weight Slip #"),
             "status": st.column_config.TextColumn("Gate Status")
         }

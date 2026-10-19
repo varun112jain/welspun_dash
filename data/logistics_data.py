@@ -11,9 +11,7 @@ def get_weighbridge_kpis():
         "trucks_today": {"value": "248 Trucks", "sub": "164 Inbound • 84 Outbound", "status": "optimal"},
         "unmanned_pct": {"value": "100% Manless", "sub": "Zero Manual Scale Operators", "status": "optimal"},
         "avg_turnaround_min": {"value": "4.2 Mins", "sub": "Reduced from 18.5m manual", "status": "optimal"},
-        "sap_sync_health": {"value": "99.8% Auto-Sync", "sub": "SAP S/4HANA MIGO / PGI Active", "status": "optimal"},
-        "active_weighbridges": {"value": "3 / 3 Online", "sub": "Gate 1, Gate 3, Gate 6", "status": "optimal"},
-        "weight_tolerance": {"value": "±0.04%", "sub": "Zero Overload Violations", "status": "optimal"}
+        "active_weighbridges": {"value": "3 / 3 Online", "sub": "Gate 1, Gate 3, Gate 6", "status": "optimal"}
     }
 
 def get_weighbridge_feeds():
